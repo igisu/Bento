@@ -1,0 +1,548 @@
+﻿namespace Emu.Bento
+{
+    partial class Form819
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            FarPoint.Win.Spread.EnhancedFocusIndicatorRenderer enhancedFocusIndicatorRenderer1 = new FarPoint.Win.Spread.EnhancedFocusIndicatorRenderer();
+            FarPoint.Win.Spread.EnhancedScrollBarRenderer enhancedScrollBarRenderer1 = new FarPoint.Win.Spread.EnhancedScrollBarRenderer();
+            FarPoint.Win.Spread.EnhancedScrollBarRenderer enhancedScrollBarRenderer2 = new FarPoint.Win.Spread.EnhancedScrollBarRenderer();
+            FarPoint.Win.Spread.CellType.EmptyCellType emptyCellType1 = new FarPoint.Win.Spread.CellType.EmptyCellType();
+            FarPoint.Win.Spread.CellType.EmptyCellType emptyCellType2 = new FarPoint.Win.Spread.CellType.EmptyCellType();
+            FarPoint.Win.Spread.CellType.GeneralCellType generalCellType1 = new FarPoint.Win.Spread.CellType.GeneralCellType();
+            FarPoint.Win.Spread.CellType.EmptyCellType emptyCellType3 = new FarPoint.Win.Spread.CellType.EmptyCellType();
+            FarPoint.Win.Spread.CellType.CurrencyCellType currencyCellType1 = new FarPoint.Win.Spread.CellType.CurrencyCellType();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSeikyusakiCD = new System.Windows.Forms.Button();
+            this.lblSeikyusakiName = new System.Windows.Forms.Label();
+            this.frUseDetailListCriteriaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.txtSeikyusakiCD = new Emu.Bento.Common.Control.TextBoxAN(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtMonth = new Emu.Bento.Common.Control.TextBoxAN(this.components);
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtYear = new Emu.Bento.Common.Control.TextBoxAN(this.components);
+            this.label16 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboBusyo = new Emu.Bento.Common.Control.ComboBoxA(this.components);
+            this.btnQuery = new System.Windows.Forms.Button();
+            this.rdoDesc = new Emu.Bento.Common.Control.RadioButtonA(this.components);
+            this.rdoAsc = new Emu.Bento.Common.Control.RadioButtonA(this.components);
+            this.cboSortKey = new Emu.Bento.Common.Control.ComboBoxA(this.components);
+            this.label9 = new System.Windows.Forms.Label();
+            this.fpSpread1 = new FarPoint.Win.Spread.FpSpread();
+            this.fpSpread1_Sheet1 = new FarPoint.Win.Spread.SheetView();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.lblCount = new System.Windows.Forms.Label();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnQuit = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.frUseDetailListCriteriaBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpSpread1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpSpread1_Sheet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnSeikyusakiCD);
+            this.groupBox1.Controls.Add(this.lblSeikyusakiName);
+            this.groupBox1.Controls.Add(this.txtSeikyusakiCD);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.txtMonth);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.txtYear);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.cboBusyo);
+            this.groupBox1.Controls.Add(this.btnQuery);
+            this.groupBox1.Controls.Add(this.rdoDesc);
+            this.groupBox1.Controls.Add(this.rdoAsc);
+            this.groupBox1.Controls.Add(this.cboSortKey);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(761, 108);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "検索条件";
+            // 
+            // btnSeikyusakiCD
+            // 
+            this.btnSeikyusakiCD.AutoSize = true;
+            this.btnSeikyusakiCD.Location = new System.Drawing.Point(322, 76);
+            this.btnSeikyusakiCD.Name = "btnSeikyusakiCD";
+            this.btnSeikyusakiCD.Size = new System.Drawing.Size(47, 25);
+            this.btnSeikyusakiCD.TabIndex = 10;
+            this.btnSeikyusakiCD.TabStop = false;
+            this.btnSeikyusakiCD.Text = "参照";
+            this.btnSeikyusakiCD.UseVisualStyleBackColor = true;
+            this.btnSeikyusakiCD.Click += new System.EventHandler(this.btnSeikyusakiCD_Click);
+            // 
+            // lblSeikyusakiName
+            // 
+            this.lblSeikyusakiName.AutoEllipsis = true;
+            this.lblSeikyusakiName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblSeikyusakiName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.frUseDetailListCriteriaBindingSource, "請求先名", true));
+            this.lblSeikyusakiName.Location = new System.Drawing.Point(153, 77);
+            this.lblSeikyusakiName.Name = "lblSeikyusakiName";
+            this.lblSeikyusakiName.Size = new System.Drawing.Size(163, 22);
+            this.lblSeikyusakiName.TabIndex = 9;
+            this.lblSeikyusakiName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // frUseDetailListCriteriaBindingSource
+            // 
+            this.frUseDetailListCriteriaBindingSource.AllowNew = false;
+            this.frUseDetailListCriteriaBindingSource.DataSource = typeof(Emu.Bento.Data.FRUseDetailListCriteria);
+            // 
+            // txtSeikyusakiCD
+            // 
+            this.txtSeikyusakiCD.CopyFromWhenEmpty = null;
+            this.txtSeikyusakiCD.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.frUseDetailListCriteriaBindingSource, "請求先ＣＤ", true));
+            this.txtSeikyusakiCD.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.txtSeikyusakiCD.Location = new System.Drawing.Point(64, 77);
+            this.txtSeikyusakiCD.MaxLength = 9;
+            this.txtSeikyusakiCD.Name = "txtSeikyusakiCD";
+            this.txtSeikyusakiCD.Size = new System.Drawing.Size(83, 22);
+            this.txtSeikyusakiCD.TabIndex = 8;
+            this.txtSeikyusakiCD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSeikyusakiCD.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSeikyusakiCD_KeyDown);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 81);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "利用者";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(172, 53);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(22, 15);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "月";
+            // 
+            // txtMonth
+            // 
+            this.txtMonth.CopyFromWhenEmpty = null;
+            this.txtMonth.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.frUseDetailListCriteriaBindingSource, "指定月", true));
+            this.txtMonth.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.txtMonth.Location = new System.Drawing.Point(139, 49);
+            this.txtMonth.MaxLength = 2;
+            this.txtMonth.Name = "txtMonth";
+            this.txtMonth.Size = new System.Drawing.Size(27, 22);
+            this.txtMonth.TabIndex = 5;
+            this.txtMonth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(111, 53);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(22, 15);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "年";
+            // 
+            // txtYear
+            // 
+            this.txtYear.CopyFromWhenEmpty = null;
+            this.txtYear.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.frUseDetailListCriteriaBindingSource, "指定年", true));
+            this.txtYear.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.txtYear.Location = new System.Drawing.Point(64, 49);
+            this.txtYear.MaxLength = 4;
+            this.txtYear.Name = "txtYear";
+            this.txtYear.Size = new System.Drawing.Size(41, 22);
+            this.txtYear.TabIndex = 3;
+            this.txtYear.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 53);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(52, 15);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "指定月";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "部署";
+            // 
+            // cboBusyo
+            // 
+            this.cboBusyo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cboBusyo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboBusyo.BackColor = System.Drawing.SystemColors.Control;
+            this.cboBusyo.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.frUseDetailListCriteriaBindingSource, "部署ＣＤ", true));
+            this.cboBusyo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboBusyo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBusyo.FormattingEnabled = true;
+            this.cboBusyo.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.cboBusyo.Location = new System.Drawing.Point(64, 20);
+            this.cboBusyo.Name = "cboBusyo";
+            this.cboBusyo.Size = new System.Drawing.Size(143, 23);
+            this.cboBusyo.TabIndex = 1;
+            // 
+            // btnQuery
+            // 
+            this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnQuery.AutoSize = true;
+            this.btnQuery.Location = new System.Drawing.Point(682, 77);
+            this.btnQuery.Name = "btnQuery";
+            this.btnQuery.Size = new System.Drawing.Size(73, 25);
+            this.btnQuery.TabIndex = 18;
+            this.btnQuery.Text = "表示(F5)";
+            this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
+            // 
+            // rdoDesc
+            // 
+            this.rdoDesc.AutoSize = true;
+            this.rdoDesc.Location = new System.Drawing.Point(621, 22);
+            this.rdoDesc.Name = "rdoDesc";
+            this.rdoDesc.Size = new System.Drawing.Size(55, 19);
+            this.rdoDesc.TabIndex = 14;
+            this.rdoDesc.Text = "降順";
+            this.rdoDesc.UseVisualStyleBackColor = true;
+            // 
+            // rdoAsc
+            // 
+            this.rdoAsc.AutoSize = true;
+            this.rdoAsc.Checked = true;
+            this.rdoAsc.Location = new System.Drawing.Point(560, 22);
+            this.rdoAsc.Name = "rdoAsc";
+            this.rdoAsc.Size = new System.Drawing.Size(55, 19);
+            this.rdoAsc.TabIndex = 13;
+            this.rdoAsc.TabStop = true;
+            this.rdoAsc.Text = "昇順";
+            this.rdoAsc.UseVisualStyleBackColor = true;
+            // 
+            // cboSortKey
+            // 
+            this.cboSortKey.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cboSortKey.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboSortKey.BackColor = System.Drawing.SystemColors.Control;
+            this.cboSortKey.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cboSortKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSortKey.FormattingEnabled = true;
+            this.cboSortKey.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.cboSortKey.Location = new System.Drawing.Point(433, 20);
+            this.cboSortKey.Name = "cboSortKey";
+            this.cboSortKey.Size = new System.Drawing.Size(121, 23);
+            this.cboSortKey.TabIndex = 12;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(375, 24);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(41, 15);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "ソート";
+            // 
+            // fpSpread1
+            // 
+            this.fpSpread1.AccessibleDescription = "fpSpread1, Sheet1";
+            this.fpSpread1.AllowUserZoom = false;
+            this.fpSpread1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fpSpread1.CellSpanSelectionPolicy = FarPoint.Win.Spread.CellSpanSelectionPolicy.IgnoreSpan;
+            this.fpSpread1.ColumnSplitBoxPolicy = FarPoint.Win.Spread.SplitBoxPolicy.Never;
+            this.fpSpread1.FocusRenderer = enhancedFocusIndicatorRenderer1;
+            this.fpSpread1.HorizontalScrollBar.Buttons = new FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton");
+            this.fpSpread1.HorizontalScrollBar.Name = "";
+            this.fpSpread1.HorizontalScrollBar.Renderer = enhancedScrollBarRenderer1;
+            this.fpSpread1.HorizontalScrollBarMode = FarPoint.Win.HorizontalScrollMode.PixelAndColumn;
+            this.fpSpread1.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded;
+            this.fpSpread1.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.fpSpread1.Location = new System.Drawing.Point(12, 126);
+            this.fpSpread1.Name = "fpSpread1";
+            this.fpSpread1.RowSplitBoxPolicy = FarPoint.Win.Spread.SplitBoxPolicy.Never;
+            this.fpSpread1.ScrollBarTrackPolicy = FarPoint.Win.Spread.ScrollBarTrackPolicy.Both;
+            this.fpSpread1.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.fpSpread1_Sheet1});
+            this.fpSpread1.Size = new System.Drawing.Size(761, 297);
+            this.fpSpread1.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Office2007;
+            this.fpSpread1.TabIndex = 1;
+            this.fpSpread1.TextTipPolicy = FarPoint.Win.Spread.TextTipPolicy.Floating;
+            this.fpSpread1.VerticalScrollBar.Buttons = new FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton");
+            this.fpSpread1.VerticalScrollBar.Name = "";
+            this.fpSpread1.VerticalScrollBar.Renderer = enhancedScrollBarRenderer2;
+            this.fpSpread1.VerticalScrollBarMode = FarPoint.Win.VerticalScrollMode.PixelAndRow;
+            // 
+            // fpSpread1_Sheet1
+            // 
+            this.fpSpread1_Sheet1.Reset();
+            this.fpSpread1_Sheet1.SheetName = "Sheet1";
+            // Formulas and custom names must be loaded with R1C1 reference style
+            this.fpSpread1_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.R1C1;
+            this.fpSpread1_Sheet1.ColumnCount = 5;
+            this.fpSpread1_Sheet1.ActiveColumnIndex = -1;
+            this.fpSpread1_Sheet1.ActiveRowIndex = -1;
+            this.fpSpread1_Sheet1.AutoGenerateColumns = false;
+            this.fpSpread1_Sheet1.ColumnFooter.DefaultStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.ColumnFooter.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.ColumnFooter.DefaultStyle.Parent = "ColumnFooterEnhanced";
+            this.fpSpread1_Sheet1.ColumnFooter.DefaultStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.ColumnFooterSheetCornerStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.ColumnFooterSheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.ColumnFooterSheetCornerStyle.Parent = "CornerEnhanced";
+            this.fpSpread1_Sheet1.ColumnFooterSheetCornerStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.ColumnHeader.Cells.Get(0, 0).Value = "利用者CD";
+            this.fpSpread1_Sheet1.ColumnHeader.Cells.Get(0, 1).Value = "利用者名";
+            this.fpSpread1_Sheet1.ColumnHeader.Cells.Get(0, 2).Value = "カード番号";
+            this.fpSpread1_Sheet1.ColumnHeader.Cells.Get(0, 3).Value = "利用期間";
+            this.fpSpread1_Sheet1.ColumnHeader.Cells.Get(0, 4).Value = "ご請求金額";
+            this.fpSpread1_Sheet1.ColumnHeader.DefaultStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.ColumnHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.ColumnHeader.DefaultStyle.Parent = "ColumnHeaderEnhanced";
+            this.fpSpread1_Sheet1.ColumnHeader.DefaultStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.Columns.Get(0).CellType = emptyCellType1;
+            this.fpSpread1_Sheet1.Columns.Get(0).HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.Right;
+            this.fpSpread1_Sheet1.Columns.Get(0).Label = "利用者CD";
+            this.fpSpread1_Sheet1.Columns.Get(0).Width = 75F;
+            this.fpSpread1_Sheet1.Columns.Get(1).CellType = emptyCellType2;
+            this.fpSpread1_Sheet1.Columns.Get(1).HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.Left;
+            this.fpSpread1_Sheet1.Columns.Get(1).Label = "利用者名";
+            this.fpSpread1_Sheet1.Columns.Get(1).Width = 150F;
+            generalCellType1.EnableSubEditor = false;
+            generalCellType1.FormatString = "yyyy/MM/dd（ddd）";
+            generalCellType1.IsDateFormat = true;
+            this.fpSpread1_Sheet1.Columns.Get(2).CellType = generalCellType1;
+            this.fpSpread1_Sheet1.Columns.Get(2).HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.Center;
+            this.fpSpread1_Sheet1.Columns.Get(2).Label = "カード番号";
+            this.fpSpread1_Sheet1.Columns.Get(2).Width = 165F;
+            this.fpSpread1_Sheet1.Columns.Get(3).CellType = emptyCellType3;
+            this.fpSpread1_Sheet1.Columns.Get(3).HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.Left;
+            this.fpSpread1_Sheet1.Columns.Get(3).Label = "利用期間";
+            this.fpSpread1_Sheet1.Columns.Get(3).Width = 250F;
+            currencyCellType1.CurrencySymbol = "\\";
+            currencyCellType1.DecimalPlaces = 0;
+            currencyCellType1.EnableSubEditor = false;
+            currencyCellType1.MaximumValue = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            currencyCellType1.MinimumValue = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            -2147483648});
+            currencyCellType1.Separator = ",";
+            currencyCellType1.ShowSeparator = true;
+            this.fpSpread1_Sheet1.Columns.Get(4).CellType = currencyCellType1;
+            this.fpSpread1_Sheet1.Columns.Get(4).HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.Right;
+            this.fpSpread1_Sheet1.Columns.Get(4).Label = "ご請求金額";
+            this.fpSpread1_Sheet1.Columns.Get(4).Width = 100F;
+            this.fpSpread1_Sheet1.DataAutoCellTypes = false;
+            this.fpSpread1_Sheet1.DataAutoHeadings = false;
+            this.fpSpread1_Sheet1.DataAutoSizeColumns = false;
+            this.fpSpread1_Sheet1.DataSource = this.bindingSource1;
+            this.fpSpread1_Sheet1.DefaultStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.DefaultStyle.Parent = "DataAreaDefault";
+            this.fpSpread1_Sheet1.DefaultStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.Center;
+            this.fpSpread1_Sheet1.FilterBar.DefaultStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.FilterBar.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.FilterBar.DefaultStyle.Parent = "FilterBarEnhanced";
+            this.fpSpread1_Sheet1.FilterBar.DefaultStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.FilterBarHeaderStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.FilterBarHeaderStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.FilterBarHeaderStyle.Parent = "RowHeaderEnhanced";
+            this.fpSpread1_Sheet1.FilterBarHeaderStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect;
+            this.fpSpread1_Sheet1.Protect = false;
+            this.fpSpread1_Sheet1.RowHeader.Columns.Default.Resizable = false;
+            this.fpSpread1_Sheet1.RowHeader.Columns.Default.Width = 38F;
+            this.fpSpread1_Sheet1.RowHeader.DefaultStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.RowHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.RowHeader.DefaultStyle.Parent = "RowHeaderEnhanced";
+            this.fpSpread1_Sheet1.RowHeader.DefaultStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.RowHeader.Visible = false;
+            this.fpSpread1_Sheet1.SelectionPolicy = FarPoint.Win.Spread.Model.SelectionPolicy.Single;
+            this.fpSpread1_Sheet1.SelectionUnit = FarPoint.Win.Spread.Model.SelectionUnit.Row;
+            this.fpSpread1_Sheet1.SheetCornerStyle.HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.General;
+            this.fpSpread1_Sheet1.SheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red;
+            this.fpSpread1_Sheet1.SheetCornerStyle.Parent = "CornerEnhanced";
+            this.fpSpread1_Sheet1.SheetCornerStyle.VerticalAlignment = FarPoint.Win.Spread.CellVerticalAlignment.General;
+            this.fpSpread1_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.A1;
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.AllowNew = false;
+            // 
+            // lblCount
+            // 
+            this.lblCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblCount.Location = new System.Drawing.Point(107, 434);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(80, 15);
+            this.lblCount.TabIndex = 3;
+            this.lblCount.Text = "lblCount";
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.AutoSize = true;
+            this.btnExport.CausesValidation = false;
+            this.btnExport.Location = new System.Drawing.Point(561, 429);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(103, 25);
+            this.btnExport.TabIndex = 5;
+            this.btnExport.Text = "Excel出力";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnQuit
+            // 
+            this.btnQuit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnQuit.AutoSize = true;
+            this.btnQuit.CausesValidation = false;
+            this.btnQuit.Location = new System.Drawing.Point(670, 429);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(103, 25);
+            this.btnQuit.TabIndex = 6;
+            this.btnQuit.Text = "終了(F12)";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            this.errorProvider1.DataSource = this.frUseDetailListCriteriaBindingSource;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "xlsx";
+            this.saveFileDialog1.Filter = "Excel ブック(*.xlsx)|*.xlsx|Excel 97-2003 ブック(*.xls)|*.xls";
+            this.saveFileDialog1.Title = "名前を付けて保存";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnClear.AutoSize = true;
+            this.btnClear.Location = new System.Drawing.Point(12, 429);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(89, 25);
+            this.btnClear.TabIndex = 2;
+            this.btnClear.Text = "クリア";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrint.AutoSize = true;
+            this.btnPrint.Location = new System.Drawing.Point(452, 429);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(103, 25);
+            this.btnPrint.TabIndex = 4;
+            this.btnPrint.Text = "印刷(F10)";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // Form819
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(785, 466);
+            this.Controls.Add(this.btnPrint);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnQuit);
+            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.lblCount);
+            this.Controls.Add(this.fpSpread1);
+            this.Controls.Add(this.groupBox1);
+            this.KeyPreview = true;
+            this.Name = "Form819";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "クレカ利用明細";
+            this.Load += new System.EventHandler(this.Form819_Load);
+            this.Shown += new System.EventHandler(this.Form819_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form819_KeyDown);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.frUseDetailListCriteriaBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpSpread1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fpSpread1_Sheet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox groupBox1;
+        private Common.Control.RadioButtonA rdoDesc;
+        private Common.Control.RadioButtonA rdoAsc;
+        private Common.Control.ComboBoxA cboSortKey;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnQuery;
+        private FarPoint.Win.Spread.FpSpread fpSpread1;
+        private FarPoint.Win.Spread.SheetView fpSpread1_Sheet1;
+        private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnQuit;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.BindingSource frUseDetailListCriteriaBindingSource;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label label1;
+        private Common.Control.ComboBoxA cboBusyo;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label label3;
+        private Common.Control.TextBoxAN txtMonth;
+        private System.Windows.Forms.Label label5;
+        private Common.Control.TextBoxAN txtYear;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button btnSeikyusakiCD;
+        private System.Windows.Forms.Label lblSeikyusakiName;
+        private Common.Control.TextBoxAN txtSeikyusakiCD;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnPrint;
+    }
+}

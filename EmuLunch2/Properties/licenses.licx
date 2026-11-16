@@ -1,0 +1,4 @@
+GrapeCity.ActiveReports.SectionReport, GrapeCity.ActiveReports.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff
+GrapeCity.ActiveReports.Viewer.Win.Viewer, GrapeCity.ActiveReports.Viewer.Win.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff
+GrapeCity.ActiveReports.Export.Pdf.Section.PdfExport, GrapeCity.ActiveReports.Export.Pdf.v11
+FarPoint.Win.Spread.FpSpread, FarPoint.Win.SpreadJ, Version=10.0.4009.2012, Culture=neutral, PublicKeyToken=a5fa960294d899e7

@@ -1,0 +1,86 @@
+
+# ==========================================
+# Visual Studio  l ݒ E L   b V  
+# ==========================================
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# ==========================================
+#  r   h      
+# ==========================================
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+TestResults/
+
+# ==========================================
+#  ꎞ t @ C   E   O
+# ==========================================
+*.tmp
+*.temp
+*.log
+*.tlog
+*.cache
+*.bak
+*.old
+*.swp
+*~
+_ReSharper*/
+*.DotSettings.user
+
+# ==========================================
+# NuGet      \ ȃp b P [ W
+# ==========================================
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# ==========================================
+#  e X g E  ͂̐     
+# ==========================================
+coverage/
+coverage-report/
+*.coverage
+*.coveragexml
+*.trx
+
+# ==========================================
+#  @     E   [ J     ݒ 
+# ==========================================
+.env
+.env.*
+!.env.example
+*.pfx
+*.snk
+*.publishsettings
+*.pubxml.user
+*.azurePubxml
+
+# ==========================================
+# SQL Server    [ J  DB t @ C  
+# ==========================================
+*.mdf
+*.ldf
+
+# ==========================================
+# OS ̐    t @ C  
+# ==========================================
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# アプリケーション設定
+App.config
+app.config
+App.config*
+app.config*
+*AssemblyInfo*

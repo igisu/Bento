@@ -1,0 +1,1687 @@
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using Emu.Bento.Common;
+using Emu.Bento.Data;
+
+namespace Emu.Bento
+{
+    /// <summary>
+    /// 請求一覧
+    /// </summary>
+    public partial class Form501 : BaseSpreadForm
+    {
+        //**************************************
+        //* 定数
+        //**************************************
+        #region 定数
+        private const int SEIKYU_NO_COLUMN      = 0;    // 請求番号列インデックス
+        private const int SEIKYUBI_COLUMN       = 1;    // 請求日列インデックス
+        private const int YOTEIBI_COLUMN        = 2;    // 回収予定日列インデックス
+        private const int COURSE_CD_COLUMN      = 3;    // コースＣＤ列インデックス
+        private const int COURSE_NAME_COLUMN    = 4;    // コース名列インデックス
+        private const int TOKUISAKI_CD_COLUMN   = 5;    // 得意先ＣＤ列インデックス
+        private const int TOKUISAKI_NAME_COLUMN = 6;    // 得意先名列インデックス
+        private const int ZENKAI_SEIKYU_COLUMN  = 7;    // 前回請求額列インデックス
+        private const int NYUKIN_COLUMN         = 8;    // 入金額列インデックス
+        private const int KURIKOSHI_COLUMN      = 9;    // 繰越額列インデックス
+        private const int KAIAGE_COLUMN         = 10;   // 買上額列インデックス
+        private const int ZEI_COLUMN            = 11;   // 消費税列インデックス
+        private const int KONKAI_SEIKYU_COLUMN  = 12;   // 今回請求額列インデックス
+        private const int SHIMEKUBUN_COLUMN     = 13;   // 締区分列インデックス
+        private const int SHIHARAIHOHO_COLUMN   = 14;   // 支払方法列インデックス
+        private const int SEIKYU_DATE_COLUMN    = 15;   // 請求合計.修正日(処理日)列インデックス
+        private const int URIAGE_DATE_COLUMN    = 16;   // 売上編集日時列インデックス
+
+        #endregion
+        //**************************************
+        //* インスタンス変数
+        //**************************************
+        #region インスタンス変数
+        /// <summary>
+        /// 請求一覧検索条件
+        /// </summary>
+        private SeikyuListCriteria _seikyuListCriteria;
+
+        /// <summary>
+        /// 請求一覧検索条件スナップショット
+        /// </summary>
+        private SeikyuListCriteria _seikyuListCriteriaSnapShot = null;
+        #endregion
+
+        //**************************************
+        //* コンストラクタ
+        //**************************************
+        #region コンストラクタ
+        public Form501()
+        {
+            InitializeComponent();
+        }
+        #endregion
+
+        //**************************************
+        //* イベント
+        //**************************************
+        #region イベント
+        /// <summary>
+        /// フォームロード
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form501_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                // アイコンを設定
+                this.Icon = Properties.Resources.money_ico;
+
+                lblCount.Text = "";
+
+                // 権限によりボタンを制御
+                btnTotalSeikyuPrint.Enabled = this.HasAuthBrowse;
+                btnReceiptPrint.Enabled = this.HasAuthBrowse;
+                btnDetail.Enabled = this.HasAuthBrowse;
+                btnDelete.Enabled = this.HasAuthEdit;
+                btnListPrint.Enabled = this.HasAuthBrowse;
+
+                // コンボボックスの選択肢生成
+                cboBusyo.SelectedValueChanged -= cboBusyo_SelectedValueChanged;     // 部署ＣＤコンボイベントをいったん削除
+                cboShiten.SelectedValueChanged -= cboShiten_SelectedValueChanged;   // 支店ＣＤコンボイベントをいったん削除
+
+                ComboUtil.SetShiten(cboShiten);
+                ComboUtil.SetBusyo(cboBusyo);           // デフォルトの支店CDは指定しない
+                ComboUtil.SetShiharaiHoho(cboShiharaiHoho);
+                //ComboUtil.SetShimeKubun(cboShimeKubun);
+                ComboUtil.Set<int>(cboShimeKubun,
+                    new string[] { "", Consts.ShimeKubun.Daily.OptionDisplay(), Consts.ShimeKubun.Weekly.OptionDisplay(), Consts.ShimeKubun.Monthly.OptionDisplay(), Consts.ShimeKubun.Tsuke.OptionDisplay() },
+                    new int[] { -1, (int)Consts.ShimeKubun.Daily, (int)Consts.ShimeKubun.Weekly, (int)Consts.ShimeKubun.Monthly, (int)Consts.ShimeKubun.Tsuke });
+
+                ComboUtil.Set(cboYoubi,
+                            new string[] { "",
+                                           string.Format("{0}:日曜日", (int)DayOfWeek.Sunday),
+                                           string.Format("{0}:月曜日", (int)DayOfWeek.Monday),
+                                           string.Format("{0}:火曜日", (int)DayOfWeek.Tuesday),
+                                           string.Format("{0}:水曜日", (int)DayOfWeek.Wednesday),
+                                           string.Format("{0}:木曜日", (int)DayOfWeek.Thursday),
+                                           string.Format("{0}:金曜日", (int)DayOfWeek.Friday),
+                                           string.Format("{0}:土曜日", (int)DayOfWeek.Saturday) },
+                            new int[] { -1,
+                                        (int)DayOfWeek.Sunday,
+                                        (int)DayOfWeek.Monday,
+                                        (int)DayOfWeek.Tuesday,
+                                        (int)DayOfWeek.Wednesday,
+                                        (int)DayOfWeek.Thursday,
+                                        (int)DayOfWeek.Friday,
+                                        (int)DayOfWeek.Saturday});
+
+                // 各テキストボックスには予めデータソースのフィールドをバインド済み
+                // ErrorProviderにもデータソースとして BindingSource をバインド済み
+                // BindingSource に データソースをバインドすると、IDataErrorInfo を元に自動的にエラー表示してくれる
+                _seikyuListCriteria = new SeikyuListCriteria();
+                seikyuListBindingSource.DataSource = _seikyuListCriteria;
+
+                // 振替用EB口座の選択肢を、部署にぶら下がるものに再設定する
+                ComboUtil.SetBusyoEB(cboEBKoza, (int)cboBusyo.SelectedValue);
+
+                // ソートキー・表示数の選択肢生成
+                ComboUtil.Set(cboSortKey,
+                    new string[] { "請求番号", "請求日", "請求先CD", "コースCD" },
+                    new string[] { "A.請求番号 {0}, A.請求先ＣＤ",
+                                   "A.請求日 {0}, A.請求先ＣＤ",
+                                   "A.請求先ＣＤ {0}, C.コースＣＤ, C.コース順",
+                                   "C.コースＣＤ {0}, C.コース順, A.請求先ＣＤ"});
+
+                ComboUtil.Set(cboListMax,
+                    new string[] { "100", "500", "1000", "無制限" },
+                    new int[] { 100, 500, 1000, -1 });
+
+                // スプレッドのヘッダ編集日時列、売上編集日時列、保険区分CD列を非表示にする
+                fpSpread1_Sheet1.Columns[SEIKYU_DATE_COLUMN].Visible = false;
+                fpSpread1_Sheet1.Columns[URIAGE_DATE_COLUMN].Visible = false;
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Application.DoEvents();         // バインドしたことで発生するSelectedValueChangedをメッセージキューから消す
+                cboShiten.SelectedValueChanged += new EventHandler(cboShiten_SelectedValueChanged);  // 支店ＣＤコンボイベントを追加
+                cboBusyo.SelectedValueChanged +=  new EventHandler(cboBusyo_SelectedValueChanged);      // 部署ＣＤコンボイベントを追加
+            }
+        }
+
+        /// <summary>
+        /// フォームキー押下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form501_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode >= Keys.F1 && e.KeyCode <= Keys.F12)
+            {
+                WriteBinding(this.ActiveControl);       // ファンクションキーが押下されたとき、入力中の内容を強制的に反映する
+
+                switch (e.KeyCode)
+                {
+                    case Keys.F5:
+                        btnQuery.PerformClick();        // 検索ボタン押下
+                        break;
+
+                    case Keys.F8:                       // 詳細画面ボタン押下
+                        btnDetail.PerformClick();
+                        break;
+
+                    case Keys.F10:                      // 領収書印刷ボタン押下
+                        btnReceiptPrint.PerformClick();
+                        break;
+
+                    case Keys.F11:                      // 締め解除ボタン押下
+                        btnDelete.PerformClick();
+                        break;
+
+                    case Keys.F12:
+                        btnQuit.PerformClick();         // 終了ボタン押下
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// フォーム 初めて表示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form501_Shown(object sender, EventArgs e)
+        {
+            // 得意先にフォーカス
+            txtTokuisakiCD.Focus();
+        }
+
+        /// <summary>
+        /// 支店コンボ変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cboShiten_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // 部署コンボの選択肢を、支店にぶら下がるものに再設定する
+                ComboUtil.SetBusyo(cboBusyo, (int?)cboShiten.SelectedValue);
+
+                // 部署コンボを初期化
+                _seikyuListCriteria.部署ＣＤ = -1;
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 部署コンボ変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cboBusyo_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // 振替用EB口座の選択肢を、部署にぶら下がるものに再設定する
+                ComboUtil.SetBusyoEB(cboEBKoza, (int)cboBusyo.SelectedValue);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// コースＣＤキー押下（ファンクションキー）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtCourseCD_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                btnCourseCD.PerformClick();
+            }
+        }
+
+        /// <summary>
+        /// コースＣＤ参照ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCourseCD_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Control activeControl = this.ActiveControl;
+                // コース選択ダイアログを表示
+                Form902 formCourseDlg = new Form902();
+                SubFormOpenInit(formCourseDlg);
+                formCourseDlg.FormClosed += new FormClosedEventHandler(Form902CourseCD_FormClosed);
+                formCourseDlg.ShowDialog();
+                if (formCourseDlg.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.ProcessTabKey(true);                   // 次のコントロールへ
+                }
+                else
+                {
+                    // テキストボックスのF1キーにて表示したダイアログが閉じられたときは、フォーカスは元のテキストボックスのままだが
+                    // 背景色が消えているので、一旦ボタンにフォーカスを移したのち、元のテキストボックスにフォーカスを戻す
+                    ((Button)sender).Select();
+                    activeControl.Select();
+                }
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// コース選択ダイアログクローズ（コースＣＤ）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form902CourseCD_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                // 親画面を閉じた後に子画面で閉じられた場合、親画面では何もしない
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+
+                this.Enabled = true;
+                this.Activate();
+                Form902 form = (Form902)sender;
+                if (form.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    errorProvider1.SetError(txtCourseCD, null);  // エラーを消す
+
+                    Course course = form.SelectedCourse;
+                    txtCourseCD.Text = course.コースＣＤ.ToString();
+                    _seikyuListCriteria.コースＣＤ = course.コースＣＤ;       // 入力内容を確定させる
+                    lblCourseName.Text = course.コース名;
+                }
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 得意先ＣＤキー押下（ファンクションキー）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtTokuisakiCD_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                btnTokuisakiCD.PerformClick();
+            }
+        }
+
+        /// <summary>
+        /// 得意先ＣＤ参照ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTokuisakiCD_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Control activeControl = this.ActiveControl;
+                // 得意先選択ダイアログを表示
+                Form900 formTokuisakiDlg = new Form900();
+                SubFormOpenInit(formTokuisakiDlg);
+                formTokuisakiDlg.FormClosed += new FormClosedEventHandler(Form900TokuiCD_FormClosed);
+                formTokuisakiDlg.ShowDialog();
+                if (formTokuisakiDlg.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.ProcessTabKey(true);                   // 次のコントロールへ
+                }
+                else
+                {
+                    // テキストボックスのF1キーにて表示したダイアログが閉じられたときは、フォーカスは元のテキストボックスのままだが
+                    // 背景色が消えているので、一旦ボタンにフォーカスを移したのち、元のテキストボックスにフォーカスを戻す
+                    ((Button)sender).Select();
+                    activeControl.Select();
+                }
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 得意先選択ダイアログクローズ（得意先ＣＤ）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form900TokuiCD_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                // 親画面を閉じた後に子画面で閉じられた場合、親画面では何もしない
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+
+                this.Enabled = true;
+                this.Activate();
+                Form900 form = (Form900)sender;
+                if (form.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    errorProvider1.SetError(txtTokuisakiCD, null);  // エラーを消す
+
+                    Tokuisaki tokuisaki = form.SelectedTokuisaki;
+                    txtTokuisakiCD.Text = tokuisaki.得意先ＣＤ.ToString();
+                    _seikyuListCriteria.得意先ＣＤ = tokuisaki.得意先ＣＤ;       // 入力内容を確定させる
+                    lblTokuisakiName.Text = tokuisaki.得意先名;
+                }
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 支払方法コンボ変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cboShiharaiHoho_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // 支払方法が振替の場合は、振替用EB口座を入力可能
+                cboEBKoza.Enabled = ((int?)cboShiharaiHoho.SelectedValue == (int)Consts.ShiharaiHohoKubun.Furikae);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 検索ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 検索条件の入力にエラーがある？
+                if (_seikyuListCriteria.HasErrors)
+                {
+                    if (string.IsNullOrEmpty(_seikyuListCriteria.Error) == false)
+                    {
+                        MessageBox.Show(this, _seikyuListCriteria.Error, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    return;
+                }
+
+                this.MdiParent.Cursor = Cursors.WaitCursor;
+
+                using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+
+                    StringBuilder sql = new StringBuilder();
+
+                    if ((int)cboListMax.SelectedValue < 0)
+                    {
+                        sql.AppendLine("SELECT");
+                    }
+                    else
+                    {
+                        sql.AppendFormat("SELECT TOP({0})", cboListMax.SelectedValue);
+                    }
+                    sql.AppendLine("     A.企業ＣＤ");
+                    sql.AppendLine("     ,A.請求番号");
+                    sql.AppendLine("     ,A.請求日");
+                    sql.AppendLine("     ,A.締区分");
+                    sql.AppendLine("     ,CASE A.締区分 ");
+                    // V_締め区分に「未収金」が無いので結合できない
+                    sql.AppendFormat("     WHEN {0} THEN '{1}' ", (int)Consts.ShimeKubun.Daily,   Consts.ShimeKubun.Daily.DisplayName()).AppendLine();
+                    sql.AppendFormat("     WHEN {0} THEN '{1}' ", (int)Consts.ShimeKubun.Weekly,  Consts.ShimeKubun.Weekly.DisplayName()).AppendLine();
+                    sql.AppendFormat("     WHEN {0} THEN '{1}' ", (int)Consts.ShimeKubun.Monthly, Consts.ShimeKubun.Monthly.DisplayName()).AppendLine();
+                    sql.AppendFormat("     WHEN {0} THEN '{1}' ", (int)Consts.ShimeKubun.Tsuke,   Consts.ShimeKubun.Tsuke.DisplayName()).AppendLine();
+                    sql.AppendLine("     ELSE '' ");
+                    sql.AppendLine("      END AS 締め区分名");
+                    sql.AppendLine("     ,C.コースＣＤ");
+                    sql.AppendLine("     ,C.コース名");
+                    sql.AppendLine("     ,A.部署ＣＤ");
+                    sql.AppendLine("     ,A.請求先ＣＤ");
+                    sql.AppendLine("     ,A.請求先名");
+                    sql.AppendLine("     ,A.前回請求額");
+                    sql.AppendLine("     ,A.入金額");
+                    sql.AppendLine("     ,A.繰越額");
+                    sql.AppendLine("     ,A.買上金額");
+                    sql.AppendLine("     ,A.調整額");
+                    sql.AppendLine("     ,A.消費税");
+                    sql.AppendLine("     ,A.今回請求額");
+                    sql.AppendLine("     ,A.回収予定日");
+                    sql.AppendLine("     ,A.印刷者ＣＤ");
+                    sql.AppendLine("     ,A.印刷日時");
+                    sql.AppendLine("     ,A.EB作成済フラグ");
+                    sql.AppendLine("     ,A.作成担当者ＣＤ");
+                    sql.AppendLine("     ,A.作成日");
+                    sql.AppendLine("     ,A.修正担当者ＣＤ");
+                    sql.AppendLine("     ,A.修正日");
+                    sql.AppendLine("     ,A.売上編集日時");
+                    sql.AppendLine("     ,SH.支払方法区分名");
+                    sql.AppendLine(" FROM");
+                    sql.AppendLine("     (SELECT");
+                    sql.AppendLine("         T.企業ＣＤ");
+                    sql.AppendLine("         ,T.請求番号");
+                    sql.AppendLine("         ,T.請求日");
+                    sql.AppendLine("         ,T.締区分");
+                    sql.AppendLine("         ,T.部署ＣＤ");
+                    sql.AppendLine("         ,T.請求先ＣＤ");
+                    sql.AppendLine("         ,T.請求先名");
+                    sql.AppendLine("         ,T.前回請求額");
+                    sql.AppendLine("         ,T.入金額");
+                    sql.AppendLine("         ,T.繰越額");
+                    sql.AppendLine("         ,T.買上金額");
+                    sql.AppendLine("         ,T.調整額");
+                    sql.AppendLine("         ,T.消費税");
+                    sql.AppendLine("         ,T.今回請求額");
+                    sql.AppendLine("         ,T.回収予定日");
+                    sql.AppendLine("         ,T.印刷者ＣＤ");
+                    sql.AppendLine("         ,T.印刷日時");
+                    sql.AppendLine("         ,T.EB作成済フラグ");
+                    sql.AppendLine("         ,T.作成担当者ＣＤ");
+                    sql.AppendLine("         ,T.作成日");
+                    sql.AppendLine("         ,T.修正担当者ＣＤ");
+                    sql.AppendLine("         ,T.修正日");
+                    sql.AppendLine("         ,MAX(U.修正日) AS 売上編集日時");
+                    sql.AppendLine("     FROM");
+                    // -- ①今回請求のキーと、それに対する前回請求のキーを求める
+                    sql.AppendLine("         (SELECT");
+                    sql.AppendLine("             T1.企業ＣＤ");
+                    sql.AppendLine("             ,T1.請求番号 AS 今回請求番号");
+                    sql.AppendLine("             ,T1.請求先ＣＤ");
+                    sql.AppendLine("             ,MAX(P1.請求日) AS 前回請求日");
+                    sql.AppendLine("         FROM");
+                    sql.AppendLine("             請求合計 AS T1");
+                    sql.AppendLine("             LEFT JOIN 請求合計 AS P1");
+                    sql.AppendLine("                 ON T1.企業ＣＤ = P1.企業ＣＤ");
+                    sql.AppendLine("                 AND T1.請求先ＣＤ = P1.請求先ＣＤ");
+                    sql.AppendLine("                 AND P1.請求日 < T1.請求日");
+                    sql.AppendLine("             LEFT JOIN 部署マスタ   AS B ON B.企業ＣＤ = T1.企業ＣＤ AND B.部署ＣＤ = T1.部署ＣＤ");
+                    sql.AppendLine("             LEFT JOIN 得意先マスタ AS T ON T.企業ＣＤ = T1.企業ＣＤ AND T.得意先ＣＤ = T1.請求先ＣＤ");
+                    sql.AppendLine("         WHERE");
+                    sql.AppendLine("             T1.企業ＣＤ = @企業ＣＤ");
+                    cmd.Parameters.Add("@企業ＣＤ", SqlDbType.Int).Value = TableBase._企業ＣＤ;
+
+                    if (_seikyuListCriteria.支店ＣＤ != null && _seikyuListCriteria.支店ＣＤ != -1)
+                    {
+                        sql.AppendLine("             AND B.支店ＣＤ = @支店ＣＤ");
+                        cmd.Parameters.Add("@支店ＣＤ", SqlDbType.Int).Value = _seikyuListCriteria.支店ＣＤ;
+                    }
+
+                    if (_seikyuListCriteria.部署ＣＤ != null && _seikyuListCriteria.部署ＣＤ != -1)
+                    {
+                        sql.AppendLine("             AND T1.部署ＣＤ = @部署ＣＤ");
+                        cmd.Parameters.Add("@部署ＣＤ", SqlDbType.Int).Value = _seikyuListCriteria.部署ＣＤ;
+                    }
+
+                    if (_seikyuListCriteria.得意先ＣＤ != null)
+                    {
+                        sql.AppendLine("             AND T1.請求先ＣＤ = @請求先ＣＤ");
+                        cmd.Parameters.Add("@請求先ＣＤ", SqlDbType.Int).Value = _seikyuListCriteria.得意先ＣＤ;
+                    }
+
+                    if (_seikyuListCriteria.請求日From != null)
+                    {
+                        sql.AppendLine("             AND T1.請求日 >= @請求日From");
+                        cmd.Parameters.Add("@請求日From", SqlDbType.Date).Value = _seikyuListCriteria.請求日From;
+                    }
+
+                    if (_seikyuListCriteria.請求日To != null)
+                    {
+                        sql.AppendLine("             AND T1.請求日 <= @請求日To");
+                        cmd.Parameters.Add("@請求日To", SqlDbType.Date).Value = _seikyuListCriteria.請求日To;
+                    }
+
+                    if (_seikyuListCriteria.回収予定日From != null)
+                    {
+                        sql.AppendLine("             AND T1.回収予定日 >= @回収予定日From");
+                        cmd.Parameters.Add("@回収予定日From", SqlDbType.Date).Value = _seikyuListCriteria.回収予定日From;
+                    }
+
+                    if (_seikyuListCriteria.回収予定日To != null)
+                    {
+                        sql.AppendLine("             AND T1.回収予定日 <= @回収予定日To");
+                        cmd.Parameters.Add("@回収予定日To", SqlDbType.Date).Value = _seikyuListCriteria.回収予定日To;
+                    }
+
+                    if (_seikyuListCriteria.処理日 != null)
+                    {
+                        sql.AppendLine("             AND CONVERT(date, T1.修正日) = @処理日");
+                        cmd.Parameters.Add("@処理日", SqlDbType.Date).Value = _seikyuListCriteria.処理日;
+                    }
+
+                    if (_seikyuListCriteria.今回請求額 != null)
+                    {
+                        sql.AppendLine("             AND T1.今回請求額 >= @今回請求額");
+                        cmd.Parameters.Add("@今回請求額", SqlDbType.Decimal).Value = _seikyuListCriteria.今回請求額;
+                    }
+
+                    if (_seikyuListCriteria.支払方法 != null && _seikyuListCriteria.支払方法 != -1)
+                    {
+                        sql.AppendLine("             AND T.支払方法 = @支払方法");
+                        cmd.Parameters.Add("@支払方法", SqlDbType.Int).Value = _seikyuListCriteria.支払方法;
+
+                        // 支払方法が振替であれば、EB銀行支店ＣＤを条件に追加する
+                        if (_seikyuListCriteria.支払方法 == (int)Consts.ShiharaiHohoKubun.Furikae)
+                        {
+                            if (string.IsNullOrEmpty(_seikyuListCriteria.EB銀行支店ＣＤ) == false)
+                            {
+                                sql.AppendLine("             AND T.EB銀行支店ＣＤ = @EB銀行支店ＣＤ");
+                                cmd.Parameters.Add("@EB銀行支店ＣＤ", SqlDbType.VarChar).Value = _seikyuListCriteria.EB銀行支店ＣＤ;
+                            }
+                        }
+                    }
+
+                    if (_seikyuListCriteria.締区分 != null && _seikyuListCriteria.締区分 != -1)
+                    {
+                        sql.AppendLine("             AND T1.締区分 = @締区分");
+                        cmd.Parameters.Add("@締区分", SqlDbType.Int).Value = _seikyuListCriteria.締区分;
+                    }
+
+                    if (_seikyuListCriteria.週締曜日 != null && _seikyuListCriteria.週締曜日 != -1)
+                    {
+                        sql.AppendLine("             AND T.週締曜日 = @週締曜日");
+                        cmd.Parameters.Add("@週締曜日", SqlDbType.Int).Value = _seikyuListCriteria.週締曜日;
+                    }
+
+                    if (_seikyuListCriteria.月締日 != null)
+                    {
+                        sql.AppendLine("             AND T.月締日 = @月締日");
+                        cmd.Parameters.Add("@月締日", SqlDbType.Int).Value = _seikyuListCriteria.月締日;
+                    }
+
+                    sql.AppendLine("         GROUP BY");
+                    sql.AppendLine("             T1.企業ＣＤ");
+                    sql.AppendLine("             ,T1.請求番号");
+                    sql.AppendLine("             ,T1.請求先ＣＤ");
+                    sql.AppendLine("         ) AS P");
+                    // -- ②今回請求の詳細
+                    sql.AppendLine("         INNER JOIN 請求合計 T ON");
+                    sql.AppendLine("             T.企業ＣＤ = P.企業ＣＤ");
+                    sql.AppendLine("             AND T.請求番号 = P.今回請求番号");
+                    // -- ③今回の請求ヘッダ
+                    sql.AppendLine("         LEFT JOIN 請求ヘッダ H ON");
+                    sql.AppendLine("             H.企業ＣＤ = T.企業ＣＤ");
+                    sql.AppendLine("             AND H.請求番号 = T.請求番号");
+                    // -- ④今回の請求に対する最新の売上
+                    sql.AppendLine("         LEFT JOIN 売上明細 AS U ON");
+                    sql.AppendLine("             U.企業ＣＤ = H.企業ＣＤ");
+                    sql.AppendLine("             AND U.得意先ＣＤ = H.得意先ＣＤ");
+                    sql.AppendLine("             AND U.部署ＣＤ = H.部署ＣＤ");
+                    sql.AppendLine("             AND U.売上日 > ISNULL(P.前回請求日, DATEADD(month, -3, getdate()))");  // -- 前回請求が無い場合は、3ヶ月前までを探す
+                    sql.AppendLine("             AND U.売上日 <= T.請求日");
+                    sql.AppendLine("     GROUP BY");
+                    sql.AppendLine("         T.企業ＣＤ");
+                    sql.AppendLine("         ,T.請求番号");
+                    sql.AppendLine("         ,T.請求日");
+                    sql.AppendLine("         ,T.締区分");
+                    sql.AppendLine("         ,T.部署ＣＤ");
+                    sql.AppendLine("         ,T.請求先ＣＤ");
+                    sql.AppendLine("         ,T.請求先名");
+                    sql.AppendLine("         ,T.前回請求額");
+                    sql.AppendLine("         ,T.入金額");
+                    sql.AppendLine("         ,T.繰越額");
+                    sql.AppendLine("         ,T.買上金額");
+                    sql.AppendLine("         ,T.調整額");
+                    sql.AppendLine("         ,T.消費税");
+                    sql.AppendLine("         ,T.今回請求額");
+                    sql.AppendLine("         ,T.回収予定日");
+                    sql.AppendLine("         ,T.印刷者ＣＤ");
+                    sql.AppendLine("         ,T.印刷日時");
+                    sql.AppendLine("         ,T.EB作成済フラグ");
+                    sql.AppendLine("         ,T.作成担当者ＣＤ");
+                    sql.AppendLine("         ,T.作成日");
+                    sql.AppendLine("         ,T.修正担当者ＣＤ");
+                    sql.AppendLine("         ,T.修正日");
+                    sql.AppendLine("     ) AS A");
+                    // -- 分配先の売上は分配元として計上したいので、得意先ＣＤを分配元のそれにすり替える
+                    sql.AppendLine("     INNER JOIN 得意先マスタ AS S ON S.企業ＣＤ = A.企業ＣＤ AND S.得意先ＣＤ = A.請求先ＣＤ");
+                    sql.AppendLine("     INNER JOIN 得意先マスタ AS J ON J.企業ＣＤ = S.企業ＣＤ AND J.得意先ＣＤ = ISNULL(S.受注得意先ＣＤ, S.得意先ＣＤ)");
+
+                    if (_seikyuListCriteria.コースＣＤ != null)
+                    {
+                        // -- コースによる絞り込み用
+                        // -- 同じ得意先に複数のコースが設定されている場合、そのいずれのコースを条件に指定しても、そのコースにぶら下がる得意先がヒットしないといけない。
+                        sql.AppendLine("     INNER JOIN");
+                        sql.AppendLine("         (SELECT DISTINCT");
+                        sql.AppendLine("             CM.企業ＣＤ");
+                        sql.AppendLine("             ,CM.部署ＣＤ");
+                        sql.AppendLine("             ,CM.コース名");
+                        sql.AppendLine("             ,CT.コースＣＤ");
+                        sql.AppendLine("             ,CT.得意先ＣＤ");
+                        sql.AppendLine("             ,CT.コース順");
+                        sql.AppendLine("         FROM");
+                        sql.AppendLine("             コースマスタ AS CM");
+                        sql.AppendLine("             INNER JOIN コーステーブル AS CT ON");
+                        sql.AppendLine("                 CM.企業ＣＤ = CT.企業ＣＤ");
+                        sql.AppendLine("                 AND CM.コースＣＤ =  CT.コースＣＤ");
+                        sql.AppendLine("         WHERE");
+                        sql.AppendLine("             CT.コースＣＤ = @コースＣＤ");
+                        sql.AppendLine("         ) AS C");
+                        sql.AppendLine("         ON J.企業ＣＤ = C.企業ＣＤ");
+                        sql.AppendLine("         AND A.部署ＣＤ = C.部署ＣＤ");     // 請求の部署と一致するものに限る
+                        sql.AppendLine("         AND J.得意先ＣＤ = C.得意先ＣＤ");
+                        cmd.Parameters.Add("@コースＣＤ", SqlDbType.Int).Value = _seikyuListCriteria.コースＣＤ;
+                    }
+                    else
+                    {
+                        // -- 検索条件にコースが指定されていない場合は、ヒットした得意先が持つコースのうち最小値を取得する
+                        sql.AppendLine("     LEFT JOIN");
+                        sql.AppendLine("         (SELECT");
+                        sql.AppendLine("             CM.企業ＣＤ");
+                        sql.AppendLine("             ,CM.部署ＣＤ");
+                        sql.AppendLine("             ,CM.コース名");
+                        sql.AppendLine("             ,CT1.コースＣＤ");
+                        sql.AppendLine("             ,CT1.得意先ＣＤ");
+                        sql.AppendLine("             ,CT1.コース順");
+                        sql.AppendLine("         FROM");
+                        sql.AppendLine("             コーステーブル AS CT1");
+                        sql.AppendLine("             INNER JOIN");
+                        sql.AppendLine("                 (SELECT");
+                        sql.AppendLine("                     M.企業ＣＤ");
+                        sql.AppendLine("                     ,M.部署ＣＤ");
+                        sql.AppendLine("                     ,T.得意先ＣＤ");
+                        sql.AppendLine("                     ,MIN(T.コースＣＤ) AS コースＣＤ");
+                        sql.AppendLine("                 FROM");
+                        sql.AppendLine("                     コースマスタ AS M");
+                        sql.AppendLine("                     LEFT JOIN コーステーブル AS T ON");
+                        sql.AppendLine("                         T.企業ＣＤ = M.企業ＣＤ");
+                        sql.AppendLine("                         AND T.コースＣＤ = M.コースＣＤ");
+                        sql.AppendLine("                 GROUP BY");
+                        sql.AppendLine("                     M.企業ＣＤ");
+                        sql.AppendLine("                     ,M.部署ＣＤ");
+                        sql.AppendLine("                     ,T.得意先ＣＤ");
+                        sql.AppendLine("                 ) AS CT2");
+                        sql.AppendLine("                     ON CT2.企業ＣＤ = CT1.企業ＣＤ");
+                        sql.AppendLine("                     AND CT2.得意先ＣＤ = CT1.得意先ＣＤ");
+                        sql.AppendLine("                     AND CT2.コースＣＤ = CT1.コースＣＤ");
+                        sql.AppendLine("             INNER JOIN コースマスタ AS CM");
+                        sql.AppendLine("                 ON CM.企業ＣＤ = CT1.企業ＣＤ");
+                        sql.AppendLine("                 AND CM.コースＣＤ =  CT1.コースＣＤ");
+                        sql.AppendLine("         ) AS C");
+                        sql.AppendLine("             ON J.企業ＣＤ = C.企業ＣＤ");
+                        sql.AppendLine("             AND A.部署ＣＤ = C.部署ＣＤ");     // 請求の部署と一致するものに限る
+                        sql.AppendLine("             AND J.得意先ＣＤ = C.得意先ＣＤ");
+                    }
+                    sql.AppendLine("     LEFT JOIN V_支払方法区分 AS SH ON S.支払方法 = SH.支払方法区分CD");
+                    sql.AppendLine(" ORDER BY ");
+                    sql.AppendFormat((string)cboSortKey.SelectedValue, rdoAsc.Checked ? "ASC" : "DESC");
+
+                    cmd.CommandText = sql.ToString();
+
+                    log.Debug(cmd.CommandTextWithParameters());
+
+                    cmd.CommandTimeout = 60;           // あじやでタイムアウトが発生しているので延ばす
+
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+
+                    DataTable dt = new DataTable("請求一覧");
+                    adp.Fill(dt);
+
+                    DataSet ds = new DataSet();
+                    ds.Tables.Add(dt);
+
+                    // この時点の件数を表示する
+                    lblCount.Text = String.Format("{0}件", dt.Rows.Count);
+
+                    // 合計行を追加する
+                    dt.Rows.Add(dt.NewRow());
+
+                    // 数式を消すため、全行削除する
+                    fpSpread1_Sheet1.Rows.Count = 0;
+
+                    bindingSource1.DataSource = ds;
+                    bindingSource1.DataMember = "請求一覧";
+
+                    log.Info("請求一覧を検索しました。");
+                }
+
+                fpSpread1_Sheet1.BindDataColumn(SEIKYU_NO_COLUMN,      "請求番号");
+                fpSpread1_Sheet1.BindDataColumn(SEIKYUBI_COLUMN,       "請求日");
+                fpSpread1_Sheet1.BindDataColumn(YOTEIBI_COLUMN,        "回収予定日");
+                fpSpread1_Sheet1.BindDataColumn(COURSE_CD_COLUMN,      "コースＣＤ");
+                fpSpread1_Sheet1.BindDataColumn(COURSE_NAME_COLUMN,    "コース名");
+                fpSpread1_Sheet1.BindDataColumn(TOKUISAKI_CD_COLUMN,   "請求先ＣＤ");
+                fpSpread1_Sheet1.BindDataColumn(TOKUISAKI_NAME_COLUMN, "請求先名");
+                fpSpread1_Sheet1.BindDataColumn(ZENKAI_SEIKYU_COLUMN,  "前回請求額");
+                fpSpread1_Sheet1.BindDataColumn(NYUKIN_COLUMN,         "入金額");
+                fpSpread1_Sheet1.BindDataColumn(KURIKOSHI_COLUMN,      "繰越額");
+                fpSpread1_Sheet1.BindDataColumn(KAIAGE_COLUMN,         "買上金額");
+                fpSpread1_Sheet1.BindDataColumn(ZEI_COLUMN,            "消費税");
+                fpSpread1_Sheet1.BindDataColumn(KONKAI_SEIKYU_COLUMN,  "今回請求額");
+                fpSpread1_Sheet1.BindDataColumn(SHIMEKUBUN_COLUMN,     "締め区分名");
+                fpSpread1_Sheet1.BindDataColumn(SHIHARAIHOHO_COLUMN,   "支払方法区分名");
+                fpSpread1_Sheet1.BindDataColumn(SEIKYU_DATE_COLUMN,    "修正日");
+                fpSpread1_Sheet1.BindDataColumn(URIAGE_DATE_COLUMN,    "売上編集日時");
+
+                // 修正日≦売上編集日時 の場合は行の文字色を変える
+                for (int rowIndex = 0; rowIndex < fpSpread1_Sheet1.Rows.Count; rowIndex++)
+                {
+                    fpSpread1_Sheet1.Rows[rowIndex].ResetForeColor();
+                    DateTime? updateDateTimeHeader = fpSpread1_Sheet1.Cells[rowIndex, SEIKYU_DATE_COLUMN].Value as DateTime?;
+                    DateTime? updateDateTimeTotal = fpSpread1_Sheet1.Cells[rowIndex, URIAGE_DATE_COLUMN].Value as DateTime?;
+                    if (updateDateTimeHeader != null && updateDateTimeTotal != null && updateDateTimeHeader <= updateDateTimeTotal)
+                    {
+                        fpSpread1_Sheet1.Rows[rowIndex].ForeColor = Color.Red;
+                    }
+                }
+
+                // 背景色をリセット
+                for (int rowIndex = 0; rowIndex < fpSpread1_Sheet1.Rows.Count; rowIndex++)
+                {
+                    fpSpread1_Sheet1.Rows[rowIndex].ResetBackColor();
+                    fpSpread1_Sheet1.Rows[rowIndex].CanFocus = true;
+                }
+
+                // 最終行を固定行にする
+                fpSpread1_Sheet1.FrozenTrailingRowCount = 1;
+                fpSpread1_Sheet1.Rows[fpSpread1_Sheet1.Rows.Count - 1].BackColor = TOTAL_BACK_COLOR;
+                fpSpread1_Sheet1.Rows[fpSpread1_Sheet1.Rows.Count - 1].CanFocus = false;
+                fpSpread1_Sheet1.Cells[fpSpread1_Sheet1.Rows.Count - 1, TOKUISAKI_NAME_COLUMN].Text = "合計";
+
+                // 合計行に数式を設定する
+                if (fpSpread1_Sheet1.Rows.Count > 1)
+                {
+                    for (int columnIndex = ZENKAI_SEIKYU_COLUMN; columnIndex <= KONKAI_SEIKYU_COLUMN; columnIndex++)
+                    {
+                        FarPoint.Win.Spread.Cell topCell = fpSpread1_Sheet1.Cells[0, columnIndex];
+                        FarPoint.Win.Spread.Cell bottomCell = fpSpread1_Sheet1.Cells[fpSpread1_Sheet1.Rows.Count - 2, columnIndex];
+                        FarPoint.Win.Spread.Cell sumCell = fpSpread1_Sheet1.Cells[fpSpread1_Sheet1.Rows.Count - 1, columnIndex];
+                        sumCell.Formula = string.Format("SUM({0}:{1})", topCell.ToString(), bottomCell.ToString());
+                    }
+                }
+
+                fpSpread1.Focus();
+                if (fpSpread1_Sheet1.Rows.Count != 0)
+                {
+                    // 検索→行を選択→検索→同じ行を選択 こうすると、bindingSource.Positionが反映されずに0のまま。
+                    // （なので詳細画面を開くと、選択した行とは異なるレコードが表示される）
+                    // どうも(暗示的／明示的に関わらず)bindingSource.Position=0の設定が無視されているようなので、いったん最終行をカレント行に設定する
+                    fpSpread1_Sheet1.ActiveRowIndex = fpSpread1_Sheet1.Rows.Count - 1;
+                    bindingSource1.Position = fpSpread1_Sheet1.Rows.Count - 1;
+
+                    fpSpread1_Sheet1.ActiveRowIndex = 0;
+                    bindingSource1.Position = 0;
+                    fpSpread1_Sheet1.AddSelection(0, 0, 1, 1);  // 先頭行を選択
+                }
+
+                // 検索実行時の検索条件を保存
+                _seikyuListCriteriaSnapShot = new SeikyuListCriteria(_seikyuListCriteria);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.MdiParent.Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// クリアボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 検索条件を初期化
+                _seikyuListCriteria = new SeikyuListCriteria();
+                seikyuListBindingSource.DataSource = _seikyuListCriteria;
+
+                // 一覧もクリアする
+                // 数式を消すため、全行削除する
+                fpSpread1_Sheet1.Rows.Count = 0;
+                bindingSource1.DataSource = null;
+
+                // この時点の件数を表示する
+                lblCount.Text = String.Format("{0}件", fpSpread1_Sheet1.Rows.Count);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 合算請求書印刷ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTotalSeikyuPrint_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (fpSpread1_Sheet1.SelectionCount == 0)
+                {
+                    MessageBox.Show(this, "レコードを選択してください。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 合計行？
+                if (fpSpread1_Sheet1.ActiveRowIndex == fpSpread1_Sheet1.Rows.Count - 1)
+                {
+                    MessageBox.Show(this, "レコードを選択してください。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                ShowTotalSeikyuPrint();     // 合計請求書印刷表示
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 鑑編集ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDetail_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (fpSpread1_Sheet1.SelectionCount == 0)
+                {
+                    MessageBox.Show(this, "レコードを選択してください。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 合計行？
+                if (fpSpread1_Sheet1.ActiveRowIndex == fpSpread1_Sheet1.Rows.Count - 1)
+                {
+                    MessageBox.Show(this, "レコードを選択してください。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                ShowDetail();       // 詳細表示（既存レコード）
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 領収書印刷ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReceiptPrint_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 検索条件の入力にエラーがある？
+                if (_seikyuListCriteria.HasErrors)
+                {
+                    MessageBox.Show(this, _seikyuListCriteria.Error ?? "検索条件にエラーがあります。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 検索未実行？
+                if (_seikyuListCriteriaSnapShot == null)
+                {
+                    MessageBox.Show(this, "データが表示されていません。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                if (fpSpread1_Sheet1.Rows.Count == 0)
+                {
+                    MessageBox.Show(this, "印刷するデータがありません。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 検索実行時の条件が変わっている？
+                if (_seikyuListCriteria.Equals(_seikyuListCriteriaSnapShot) == false)
+                {
+                    MessageBox.Show(this, "検索条件が変わっています。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 出力条件を設定
+                _seikyuListCriteria.出力件数 = (int)cboListMax.SelectedValue;
+                _seikyuListCriteria.ソート順 = (string)cboSortKey.SelectedValue;
+                _seikyuListCriteria.昇順 = rdoAsc.Checked;
+
+                // 領収書印刷ダイアログを表示
+                Form501P formRyoshusyo = new Form501P(_seikyuListCriteria);
+                SubFormOpenInit(formRyoshusyo);
+                formRyoshusyo.FormClosed += new FormClosedEventHandler(Form501Print_FormClosed);
+                formRyoshusyo.Show();
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 領収書印刷ダイアログクローズ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form501Print_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                // 親画面を閉じた後に子画面で閉じられた場合、親画面では何もしない
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+
+                this.Enabled = true;
+                this.Activate();
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 締め解除ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (fpSpread1_Sheet1.SelectionCount == 0)
+                {
+                    MessageBox.Show(this, "レコードを選択してください。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                // 合計行？
+                if (fpSpread1_Sheet1.ActiveRowIndex == fpSpread1_Sheet1.Rows.Count - 1)
+                {
+                    MessageBox.Show(this, "レコードを選択してください。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                DataRow dr = ((DataRowView)bindingSource1.Current).Row;
+                SeikyuGokei seikyuGokei = new SeikyuGokei(dr);
+
+                // 削除可能かチェック
+                if (CanDelete(seikyuGokei) == false)
+                {
+                    return;
+                }
+
+                if (MessageBox.Show(this, "このデータを削除しますか？", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+
+                this.MdiParent.Cursor = Cursors.WaitCursor;
+
+                if( Delete(seikyuGokei) == false)
+                {
+                    return;
+                }
+
+                btnQuery.PerformClick();        // 再検索
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.MdiParent.Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// 一覧印刷ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnListPrint_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 帳票に該当するプリンタを取得。未選択ならダイアログを開く。そのあと印刷処理を実行
+                DecidePrinter(Consts.Reports.SeikyuList, PrintMain);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Excel出力ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            string fileName = "";
+            try
+            {
+                saveFileDialog1.FileName = this.Text;
+                if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    fileName = saveFileDialog1.FileName;
+                    FarPoint.Excel.ExcelSaveFlags excelSaveFlags = FarPoint.Excel.ExcelSaveFlags.SaveCustomColumnHeaders;
+                    if (fileName.ToLower().EndsWith("xlsx"))
+                    {
+                        excelSaveFlags |= FarPoint.Excel.ExcelSaveFlags.UseOOXMLFormat;
+                    }
+                    fpSpread1.SaveExcel(fileName, excelSaveFlags);
+                    if (MessageBox.Show(this, "Excel出力が完了しました。\n今すぐ開きますか？", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Process.Start(fileName);
+                    }
+                }
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ApplicationException)
+            {
+                MessageBox.Show(this, fileName + "\nファイルが開かれています。保存できませんでした。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 終了ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Spreadセルダブルクリック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fpSpread1_CellDoubleClick(object sender, FarPoint.Win.Spread.CellClickEventArgs e)
+        {
+            try
+            {
+                // 列ヘッダー or 列フッター or 行ヘッダー？
+                if (e.ColumnHeader || e.ColumnFooter || e.RowHeader)
+                {
+                    return;
+                }
+
+                // 合計行？
+                if (e.Row == fpSpread1_Sheet1.Rows.Count - 1)
+                {
+                    return;
+                }
+
+                ShowDetail();       // 詳細表示
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Spreadキー押下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fpSpread1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == (char)Keys.Return)
+                {
+                    if (fpSpread1_Sheet1.SelectionCount != 0)
+                    {
+                        ShowDetail();       // 詳細表示
+                    }
+                }
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Spreadセル移動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fpSpread1_LeaveCell(object sender, FarPoint.Win.Spread.LeaveCellEventArgs e)
+        {
+            // 最終行(=合計行)には移動しない
+            if (e.NewRow >= fpSpread1_Sheet1.Rows.Count - 1)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        #endregion
+
+        //**************************************
+        //* メソッド
+        //**************************************
+        #region メソッド
+        /// <summary>
+        /// 合計請求書印刷表示
+        /// </summary>
+        private void ShowTotalSeikyuPrint()
+        {
+            try
+            {
+                this.MdiParent.Cursor = Cursors.WaitCursor;
+                DataRow dr = ((DataRowView)bindingSource1.Current).Row;
+                SeikyuGokei seikyuGokei = new SeikyuGokei(dr);
+                Form506 form = new Form506((decimal)seikyuGokei.請求番号);
+                if (form.HasAuthBrowse == false)
+                {
+                    MessageBox.Show(this, "詳細画面を開く権限がありません。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                SubFormOpenInit(form);
+                form.Show();
+                form.FormClosed += new FormClosedEventHandler(Form506_FormClosed);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                throw new BentoException(ex);
+            }
+            finally
+            {
+                this.MdiParent.Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// 合計請求書印刷画面クローズ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form506_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                // 親画面を閉じた後に子画面で閉じられた場合、親画面では何もしない
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+
+                this.Enabled = true;
+                this.Activate();
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 鑑編集
+        /// </summary>
+        private void ShowDetail()
+        {
+            try
+            {
+                this.MdiParent.Cursor = Cursors.WaitCursor;
+                DataRow dr = ((DataRowView)bindingSource1.Current).Row;
+                SeikyuGokei seikyuGokei = new SeikyuGokei(dr);
+                Form502 form = new Form502(seikyuGokei);
+                if (form.HasAuthBrowse == false)
+                {
+                    MessageBox.Show(this, "詳細画面を開く権限がありません。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                SubFormOpenInit(form);
+                form.Show();
+                form.FormClosed += new FormClosedEventHandler(Form502_FormClosed);
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                throw new BentoException(ex);
+            }
+            finally
+            {
+                this.MdiParent.Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// 鑑編集画面クローズ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form502_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                // 親画面を閉じた後に子画面で閉じられた場合、親画面では何もしない
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+
+                this.Enabled = true;
+                this.Activate();
+
+                // 先頭行のインデックスを記憶
+                int rowIndex = fpSpread1.GetViewportTopRow(0);
+                int activeRowIndex = fpSpread1_Sheet1.ActiveRowIndex;
+                int activeColumnIndex = fpSpread1_Sheet1.ActiveColumnIndex;
+
+                btnQuery.PerformClick();        // 再検索
+
+                // 先頭行のインデックスを復元（そこにスクロール）
+                fpSpread1.SetViewportTopRow(0, rowIndex);
+
+                // アクティブセルも可能な限り復元する
+                if (activeRowIndex >= fpSpread1_Sheet1.Rows.Count - fpSpread1_Sheet1.FrozenTrailingRowCount)
+                {
+                    activeRowIndex = fpSpread1_Sheet1.Rows.Count - fpSpread1_Sheet1.FrozenTrailingRowCount - 1;
+                }
+                if (0 <= activeRowIndex)
+                {
+                    fpSpread1_Sheet1.ActiveRowIndex = activeRowIndex;
+                    bindingSource1.Position = activeRowIndex;       // Currentプロパティがずれる場合があるのを回避
+                    fpSpread1_Sheet1.AddSelection(activeRowIndex, -1, 1, -1);   // 単一選択行を復元
+                }
+                fpSpread1_Sheet1.ActiveColumnIndex = activeColumnIndex;
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 削除可能か？
+        /// </summary>
+        /// <param name="seikyuGokei">請求合計</param>
+        /// <returns>削除可能な場合はTrue</returns>
+        private bool CanDelete(SeikyuGokei seikyuGokei)
+        {
+            try
+            {
+                if (this.HasAuthEdit == false)
+                {
+                    MessageBox.Show(this, "編集できる権限がありません。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
+
+                using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+
+                    // 指定した請求番号より未来のレコードがあれば削除禁止
+                    cmd.CommandText = "\r\n SELECT" +
+                                      "\r\n     COUNT(F1.請求番号) AS CNT" +
+                                      "\r\n FROM" +
+                                      "\r\n     請求合計 G1" +
+                                      "\r\n     INNER JOIN 請求合計 F1 ON" +
+                                      "\r\n                  G1.企業ＣＤ = F1.企業ＣＤ AND" +
+                                      "\r\n                  G1.部署ＣＤ = F1.部署ＣＤ AND" +
+                                      "\r\n                  G1.請求先ＣＤ = F1.請求先ＣＤ AND" +
+                                      "\r\n                  F1.請求日 > G1.請求日" +
+                                      "\r\n WHERE" +
+                                      "\r\n     G1.企業ＣＤ = @企業ＣＤ" +
+                                      "\r\n AND G1.部署ＣＤ = @部署ＣＤ" +
+                                      "\r\n AND G1.請求番号 = @請求番号";
+
+                    cmd.Parameters.Add("@企業ＣＤ", SqlDbType.Int).Value = TableBase._企業ＣＤ;
+                    cmd.Parameters.Add("@部署ＣＤ", SqlDbType.Int).Value = seikyuGokei.部署ＣＤ;
+                    cmd.Parameters.Add("@請求番号", SqlDbType.Int).Value = seikyuGokei.請求番号;
+
+                    log.Debug(cmd.CommandTextWithParameters());
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        if ((int)reader["CNT"] != 0)
+                        {
+                            MessageBox.Show(this, "最新の請求ではありません。削除できません。", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+            catch (BentoException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                throw new BentoException(ex);
+            }
+        }
+
+        /// <summary>
+        /// DB削除
+        /// </summary>
+        /// <param name="seikyuGokei">請求合計</param>
+        /// <returns>削除できた場合はTrue</returns>
+        private bool Delete(SeikyuGokei seikyuGokei)
+        {
+            History.ProcessType historyProcess = History.ProcessType.Delete;
+
+            SqlCommand cmd;
+            UserData userData = UserData.getInstance();
+
+            using (SqlConnection con = new SqlConnection(DBUtil.ConnectionString))
+            {
+                con.Open();
+                SqlTransaction tran = con.BeginTransaction();
+                try
+                {
+                    // 請求ヘッダを削除
+                    cmd = con.CreateCommand();
+                    cmd.Transaction = tran;
+                    cmd.CommandText = "DELETE FROM 請求ヘッダ WHERE 企業ＣＤ = @企業ＣＤ AND 請求番号 = @請求番号";
+                    cmd.Parameters.Add("@企業ＣＤ", SqlDbType.Int).Value = TableBase._企業ＣＤ;
+                    cmd.Parameters.Add("@請求番号", SqlDbType.Int).Value = seikyuGokei.請求番号;
+                    log.Debug(cmd.CommandTextWithParameters());
+                    cmd.ExecuteNonQuery();
+
+                    // 操作履歴に保存
+                    History.Save(con, tran, this.Text, "請求ヘッダ", seikyuGokei.請求番号.ToString(), historyProcess);
+
+                    // 請求合計を削除
+                    cmd = con.CreateCommand();
+                    cmd.Transaction = tran;
+                    cmd.CommandText = "DELETE FROM 請求合計 WHERE 企業ＣＤ = @企業ＣＤ AND 請求番号 = @請求番号";
+                    cmd.Parameters.Add("@企業ＣＤ", SqlDbType.Int).Value = TableBase._企業ＣＤ;
+                    cmd.Parameters.Add("@請求番号", SqlDbType.Int).Value = seikyuGokei.請求番号;
+                    log.Debug(cmd.CommandTextWithParameters());
+                    cmd.ExecuteNonQuery();
+
+                    // 操作履歴に保存
+                    History.Save(con, tran, this.Text, "請求合計", seikyuGokei.Code, historyProcess);
+
+                    tran.Commit();
+                    log.InfoFormat("請求ヘッダ・請求合計を{0}しました。", historyProcess.DisplayName());
+                    MessageBox.Show(this, string.Format("{0}しました。", historyProcess.DisplayName()), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                catch (BentoException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    History.Error(ex);
+                    throw new BentoException(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 印刷処理
+        /// </summary>
+        /// <param name="printerNameA4">A4プリンタ名</param>
+        private void PrintMain(string printerNameA4)
+        {
+            try
+            {
+                this.MdiParent.Cursor = Cursors.WaitCursor;
+
+                DataSet ds = (DataSet)bindingSource1.DataSource;
+                DataTable dt = ds.Tables["請求一覧"];
+
+                Report501A report501A = new Report501A();
+                report501A.DataSource = dt;
+                report501A.Document.Printer.DocumentName = "請求一覧";
+                report501A.Document.Printer.PrinterName = printerNameA4;
+
+                // プレビューを表示
+                FormPreview form = new FormPreview();
+                form.MdiParent = this.MdiParent;
+                form.Title = "請求一覧";
+                form.Show();
+                form.ActiveReportViewer.LoadDocument(report501A);
+                form.FormClosed += new FormClosedEventHandler(formPreview_FormClosed);
+
+                History.Save(this.Text, "請求一覧", "", History.ProcessType.Output);
+
+                log.Info("請求一覧を印刷しました。");
+            }
+            catch (BentoException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                throw new BentoException(ex);
+            }
+            finally
+            {
+                this.MdiParent.Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// プレビュー画面クローズ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void formPreview_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                FormPreview form = (FormPreview)sender;
+                form.Dispose();
+                form = null;
+            }
+            catch (BentoException ex)
+            {
+                MessageBox.Show(this, ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                History.Error(ex);
+                MessageBox.Show(this, "例外が発生しました。" + ex.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+    }
+}

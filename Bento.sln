@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bento", "Bento\Bento.csproj", "{5E2965E9-78CC-4B55-B883-09E29407FC3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokuisakiTankaTekiyou", "TokuisakiTankaTekiyou\TokuisakiTankaTekiyou.csproj", "{76F4CD63-80E9-4FAA-BF70-2B6E2EE0FC28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E2965E9-78CC-4B55-B883-09E29407FC3D}.Debug|x86.ActiveCfg = Debug|x86
+		{5E2965E9-78CC-4B55-B883-09E29407FC3D}.Debug|x86.Build.0 = Debug|x86
+		{5E2965E9-78CC-4B55-B883-09E29407FC3D}.Release|x86.ActiveCfg = Release|x86
+		{5E2965E9-78CC-4B55-B883-09E29407FC3D}.Release|x86.Build.0 = Release|x86
+		{76F4CD63-80E9-4FAA-BF70-2B6E2EE0FC28}.Debug|x86.ActiveCfg = Debug|x86
+		{76F4CD63-80E9-4FAA-BF70-2B6E2EE0FC28}.Debug|x86.Build.0 = Debug|x86
+		{76F4CD63-80E9-4FAA-BF70-2B6E2EE0FC28}.Release|x86.ActiveCfg = Release|x86
+		{76F4CD63-80E9-4FAA-BF70-2B6E2EE0FC28}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,14 @@
+セットアップの作成方法
+
+手順１．
+C:\EmuLunch\PC\EmuLunch2\App.config 以下を書き換える。
+・企業ＣＤ
+・DB接続先情報
+・UpdateURL
+※CompanyCD、Password、UpdateURL は EmuEncryptor.exe を使って暗号化すること。
+
+
+手順２．
+EmuLunch2Setup.sln を開いて「ソリューションのリビルド」を実行すると、以下のファイルが出力されます。
+EmuLunch2Setup.msi
+setup.exe

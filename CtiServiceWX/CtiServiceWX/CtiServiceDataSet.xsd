@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CtiServiceDataSet" targetNamespace="http://tempuri.org/CtiServiceDataSet.xsd" xmlns:mstns="http://tempuri.org/CtiServiceDataSet.xsd" xmlns="http://tempuri.org/CtiServiceDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CtiServiceDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="CtiServiceDataSet" msprop:Generator_DataSetName="CtiServiceDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TelList" msprop:Generator_UserTableName="TelList" msprop:Generator_RowDeletedName="TelListRowDeleted" msprop:Generator_TableClassName="TelListDataTable" msprop:Generator_RowChangedName="TelListRowChanged" msprop:Generator_RowClassName="TelListRow" msprop:Generator_RowChangingName="TelListRowChanging" msprop:Generator_RowEvArgName="TelListRowChangeEvent" msprop:Generator_RowEvHandlerName="TelListRowChangeEventHandler" msprop:Generator_TablePropName="TelList" msprop:Generator_TableVarName="tableTelList" msprop:Generator_RowDeletingName="TelListRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CUSTOMER_NO" msprop:Generator_UserColumnName="CUSTOMER_NO" msprop:Generator_ColumnPropNameInRow="CUSTOMER_NO" msprop:Generator_ColumnVarNameInTable="columnCUSTOMER_NO" msprop:Generator_ColumnPropNameInTable="CUSTOMER_NOColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="CUSTOMER_NAME" msprop:Generator_UserColumnName="CUSTOMER_NAME" msprop:Generator_ColumnPropNameInRow="CUSTOMER_NAME" msprop:Generator_ColumnVarNameInTable="columnCUSTOMER_NAME" msprop:Generator_ColumnPropNameInTable="CUSTOMER_NAMEColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="TELNO" msprop:Generator_UserColumnName="TELNO" msprop:Generator_ColumnPropNameInRow="TELNO" msprop:Generator_ColumnVarNameInTable="columnTELNO" msprop:Generator_ColumnPropNameInTable="TELNOColumn" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

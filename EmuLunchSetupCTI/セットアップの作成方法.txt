@@ -1,0 +1,21 @@
+セットアップの作成方法
+
+手順１．
+Bento\app.config のDB接続先情報と企業ＣＤを書き換える。
+※CompanyCD と Password は EmuEncryptor.exe を使って暗号化すること。
+
+
+手順２．
+..\..\EmuUpdater\EmuUpdater\app.config のURLを書き換える。
+※URL は EmuEncryptor.exe を使って暗号化すること。
+
+
+手順３．
+CtiService.xml のDB接続先情報と企業ＣＤを書き換える。
+※暗号化は不要です。
+
+
+手順４．
+EmuLunchSetupCTI.sln を開いて「ソリューションのリビルド」を実行すると、以下のファイルが出力されます。
+EmuLunchSetupCTI.msi
+setup.exe

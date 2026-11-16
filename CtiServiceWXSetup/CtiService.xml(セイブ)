@@ -1,0 +1,23 @@
+﻿<CtiService>
+  <DBSERVER>bo.seibu.work</DBSERVER>
+  <DBUSERNAME>seibu</DBUSERNAME>
+  <DBPASSWORD>emukika9@seibu</DBPASSWORD>
+  <DBNAME>SEIBULUNCH</DBNAME>
+  <CTISENDHOST>localhost</CTISENDHOST>
+  <CTISENDPORT>2002</CTISENDPORT>
+  <CTIRECEIVEPORT>2010</CTIRECEIVEPORT>
+  <OUTPUTLOG>false</OUTPUTLOG>
+  <GETSQL_TELLIST>
+  SELECT
+    CONVERT(varchar ,T1.Tel_CustNo) AS CUSTOMER_NO
+    ,M1.得意先名 AS CUSTOMER_NAME
+    ,T1.Tel_TelNo AS TELNO
+  FROM
+    C_TelToCust T1
+    LEFT OUTER JOIN 得意先マスタ M1 ON
+      T1.企業ＣＤ = M1.企業ＣＤ AND
+      T1.Tel_CustNo = M1.得意先ＣＤ
+  WHERE
+    T1.企業ＣＤ = 40000
+  </GETSQL_TELLIST>
+</CtiService>

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{76F4CD63-80E9-4FAA-BF70-2B6E2EE0FC28}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Emu.TokuisakiTankaTekiyou</RootNamespace>
+    <AssemblyName>TokuisakiTankaTekiyou</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bento\Log4net\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Bento\Common\BentoException.cs">
+      <Link>Common\BentoException.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\ConnectionInformation.cs">
+      <Link>Common\ConnectionInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\Consts.cs">
+      <Link>Common\Consts.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\DBUtil.cs">
+      <Link>Common\DBUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\Encrypt\KeyGenerator.cs">
+      <Link>Common\Encrypt\KeyGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\Encrypt\KeyGeneratorImpl.cs">
+      <Link>Common\Encrypt\KeyGeneratorImpl.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\Encrypt\KeyGeneratorParameter.cs">
+      <Link>Common\Encrypt\KeyGeneratorParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\Encrypt\SecretData.cs">
+      <Link>Common\Encrypt\SecretData.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\History.cs">
+      <Link>Common\History.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\Rounding.cs">
+      <Link>Common\Rounding.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Common\SqlCommandExtensions.cs">
+      <Link>Common\SqlCommandExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Data\ChumonMeisai.cs">
+      <Link>Data\ChumonMeisai.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Data\Syohizei.cs">
+      <Link>Data\Syohizei.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Data\TableBase.cs">
+      <Link>Data\TableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Data\TableBase2.cs">
+      <Link>Data\TableBase2.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Data\Tantousya.cs">
+      <Link>Data\Tantousya.cs</Link>
+    </Compile>
+    <Compile Include="..\Bento\Data\UserData.cs">
+      <Link>Data\UserData.cs</Link>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Log4net.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

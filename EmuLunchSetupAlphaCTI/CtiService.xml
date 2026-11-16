@@ -1,0 +1,48 @@
+﻿<CtiService>
+  <DBSERVER>219.94.232.23</DBSERVER>
+  <DBUSERNAME>marugame</DBUSERNAME>
+  <DBPASSWORD>emukika9@marugame</DBPASSWORD>
+  <DBNAME>MARUGAME</DBNAME>
+  <CTISENDHOST>localhost</CTISENDHOST>
+  <CTISENDPORT>2002</CTISENDPORT>
+  <CTIRECEIVEPORT>2010</CTIRECEIVEPORT>
+  <OUTPUTLOG>false</OUTPUTLOG>
+
+  <EXTLENGTH>3</EXTLENGTH>
+  <CTISOFTPHONEANALYZEPORT>2005</CTISOFTPHONEANALYZEPORT>
+  <SOFTPHONETRACE>false</SOFTPHONETRACE>
+  <DBCONNECT>true</DBCONNECT>
+
+  <USEWCFRECEIVE>true</USEWCFRECEIVE>   <!-- true:着信による通話開始の通知にWCFを使用する false:exe起動のコマンドラインを使用する -->
+  <USEWCFDIALING>true</USEWCFDIALING>   <!-- true:WCFを使用して発信する false:alpha2toプロトコルを使用して発信する -->
+
+  <!-- アプリケーション接続ツールの[メニュー]-[編集]-[アプリケーションの設定]の                         -->
+  <!-- 「URL(アプリケーション)呼出設定」タブで「URL(アプリケーション)の呼び出しを行う」をONにした場合、 -->
+  <!-- 各イベントの呼出引数は下記の通りにしてください。                                                 -->
+  <!-- ┌───────┬─────────────────┐ -->
+  <!-- │イベント      │呼出引数                          │ -->
+  <!-- ├───────┼─────────────────┤ -->
+  <!-- │着信時呼出    │DELIVERED,,外線,%TELNO%,%DIALINNO%│ -->
+  <!-- ├───────┼─────────────────┤ -->
+  <!-- │通話時呼出    │CONNECTED,,外線,%TELNO%,%DIALINNO%│ -->
+  <!-- ├───────┼─────────────────┤ -->
+  <!-- │発信時呼出    │MADECALL,1,外線,%TELNO%,          │ -->
+  <!-- ├───────┼─────────────────┤ -->
+  <!-- │通話終了時呼出│TALKEND,1,外線,%TELNO%,%DIALINNO% │ -->
+  <!-- └───────┴─────────────────┘ -->
+  <!-- 上記以外のイベントは呼び出さないようにしてください。   -->
+
+  <GETSQL_TELLIST>
+  SELECT
+    CONVERT(varchar ,T1.Tel_CustNo) AS CUSTOMER_NO
+    ,M1.得意先名 AS CUSTOMER_NAME
+    ,T1.Tel_TelNo AS TELNO
+  FROM
+    C_TelToCust T1
+    LEFT OUTER JOIN 得意先マスタ M1 ON
+      T1.企業ＣＤ = M1.企業ＣＤ AND
+      T1.Tel_CustNo = M1.得意先ＣＤ
+  WHERE
+    T1.企業ＣＤ = 37000
+  </GETSQL_TELLIST>
+</CtiService>

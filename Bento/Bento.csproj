@@ -1,0 +1,2151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5E2965E9-78CC-4B55-B883-09E29407FC3D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Emu.Bento</RootNamespace>
+    <AssemblyName>EmuLunch</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FarPoint.CalcEngine, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FarPoint.Excel, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FarPoint.PDF, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FarPoint.PluginCalendar.WinForms, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\SpreadWin7\Bin\v7.0.2016.2008\FarPoint.PluginCalendar.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FarPoint.Win, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FarPoint.Win.Chart, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FarPoint.Win.SpreadJ, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.ArsClient.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Chart.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Diagnostics.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Document.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Export.Image.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Export.Pdf.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Extensibility.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.ActiveReports.Viewer.Win.v11, Version=11.0.9393.1, Culture=neutral, PublicKeyToken=cc4967777c49a3ff, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GrapeCity.Win.PluginInputMan, Version=7.0.2016.2008, Culture=neutral, PublicKeyToken=a5fa960294d899e7, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Log4net\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Json.NET\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseSpreadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseSpreadForm.Designer.cs">
+      <DependentUpon>BaseSpreadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\BentoException.cs" />
+    <Compile Include="Common\ColumnListDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\ComboUtil.cs" />
+    <Compile Include="Common\ConnectionInformation.cs" />
+    <Compile Include="Common\Consts.cs" />
+    <Compile Include="Common\Control\CheckBoxA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\CheckBoxA.Designer.cs">
+      <DependentUpon>CheckBoxA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\ComboBoxA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\ComboBoxA.Designer.cs">
+      <DependentUpon>ComboBoxA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\DateTimePickerA.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Common\Control\DateTimePickerA.Designer.cs">
+      <DependentUpon>DateTimePickerA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\NullableDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\NullableDateTimePicker.Designer.cs">
+      <DependentUpon>NullableDateTimePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\RadioButtonA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\RadioButtonA.Designer.cs">
+      <DependentUpon>RadioButtonA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxA.Designer.cs">
+      <DependentUpon>TextBoxA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAD.Designer.cs">
+      <DependentUpon>TextBoxAD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAF.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAF.Designer.cs">
+      <DependentUpon>TextBoxAF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAHMS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAHMS.Designer.cs">
+      <DependentUpon>TextBoxAHMS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAM.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAM.Designer.cs">
+      <DependentUpon>TextBoxAM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAMC.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAMC.Designer.cs">
+      <DependentUpon>TextBoxAMC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAN.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAN.Designer.cs">
+      <DependentUpon>TextBoxAN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxANC.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxANC.Designer.cs">
+      <DependentUpon>TextBoxANC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAYMD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Control\TextBoxAYMD.Designer.cs">
+      <DependentUpon>TextBoxAYMD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DataTableExtension.cs" />
+    <Compile Include="Common\DBUtil.cs" />
+    <Compile Include="Common\Encrypt\KeyGenerator.cs" />
+    <Compile Include="Common\Encrypt\KeyGeneratorImpl.cs" />
+    <Compile Include="Common\Encrypt\KeyGeneratorParameter.cs" />
+    <Compile Include="Common\Encrypt\SecretData.cs" />
+    <Compile Include="Common\ExcelManager.cs" />
+    <Compile Include="Common\History.cs" />
+    <Compile Include="Common\LoginCountControler.cs" />
+    <Compile Include="Common\MailSender.cs" />
+    <Compile Include="Common\NoHilightEnhancedColumnHeaderRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\ObjectSizeMeasure.cs" />
+    <Compile Include="Common\Printers.cs" />
+    <Compile Include="Common\Rounding.cs" />
+    <Compile Include="Common\SqlCommandExtensions.cs" />
+    <Compile Include="Common\SystemMaster.cs" />
+    <Compile Include="Common\WebAccess.cs" />
+    <Compile Include="Common\WebClientEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CSVWriter.cs" />
+    <Compile Include="Data\AnserApiContainer.cs" />
+    <Compile Include="Data\AnserApiImportCriteria.cs" />
+    <Compile Include="Data\AnserApiDetail.cs" />
+    <Compile Include="Data\AnserApiRecord.cs" />
+    <Compile Include="Data\Bank.cs" />
+    <Compile Include="Data\BankBranch.cs" />
+    <Compile Include="Data\BigBagLabel.cs" />
+    <Compile Include="Data\BigBagLabelCriteria.cs" />
+    <Compile Include="Data\BigBagLabelHistory.cs" />
+    <Compile Include="Data\BigBagLabelPrintCriteria.cs" />
+    <Compile Include="Data\BigBagLabelSettei.cs" />
+    <Compile Include="Data\Biko.cs" />
+    <Compile Include="Data\BunpaisakiKey.cs" />
+    <Compile Include="Data\Busyo.cs" />
+    <Compile Include="Data\BusyoCriteria.cs" />
+    <Compile Include="Data\BusyoEB.cs" />
+    <Compile Include="Data\BusyoImage.cs" />
+    <Compile Include="Data\CallCourseCriteria.cs" />
+    <Compile Include="Data\ChumonHeader.cs" />
+    <Compile Include="Data\ChumonListCriteria.cs" />
+    <Compile Include="Data\ChumonMeisai.cs" />
+    <Compile Include="Data\ChumonMeisaiCriteria.cs" />
+    <Compile Include="Data\ChumonTokuisaki.cs" />
+    <Compile Include="Data\ChumonZandaka.cs" />
+    <Compile Include="Data\Course.cs" />
+    <Compile Include="Data\CourseChumonCriteria.cs" />
+    <Compile Include="Data\CourseChumonListCriteria.cs" />
+    <Compile Include="Data\CourseCriteria.cs" />
+    <Compile Include="Data\CourseDeliveryHistory.cs" />
+    <Compile Include="Data\CourseGroup.cs" />
+    <Compile Include="Data\CourseGroupCriteria.cs" />
+    <Compile Include="Data\CourseGroupDetail.cs" />
+    <Compile Include="Data\CourseMoveCriteria.cs" />
+    <Compile Include="Data\CourseRinjiCriteria.cs" />
+    <Compile Include="Data\CourseTable.cs" />
+    <Compile Include="Data\CourseUriageListCriteria.cs" />
+    <Compile Include="Data\CSVTemplate.cs" />
+    <Compile Include="Data\EBContainer.cs" />
+    <Compile Include="Data\EBFormat.cs" />
+    <Compile Include="Data\ITokuisaki.cs" />
+    <Compile Include="Data\PaySeikyuDetailCriteria.cs" />
+    <Compile Include="Data\PaySeikyuGokei.cs" />
+    <Compile Include="Data\PaySeikyuListCriteria.cs" />
+    <Compile Include="Data\PaySeikyuShimeCriteria.cs" />
+    <Compile Include="Data\GassanSeikyusyo.cs" />
+    <Compile Include="Data\GetsujiSyohinListCriteria.cs" />
+    <Compile Include="Data\GetsujiSyukeiCriteria.cs" />
+    <Compile Include="Data\GetsujiTokuisakiListCriteria.cs" />
+    <Compile Include="Data\GetsujiTokuisakiSuiiCriteria.cs" />
+    <Compile Include="Data\GetsujiUrikakeZan.cs" />
+    <Compile Include="Data\GetsujiUrikakeZanEdit.cs" />
+    <Compile Include="Data\GetsujiUrikakeZanListCriteria.cs" />
+    <Compile Include="Data\HaisoYoteiCriteria.cs" />
+    <Compile Include="Data\HaisoYoteiFromUriage.cs" />
+    <Compile Include="Data\HanbaiJissekiListCriteria.cs" />
+    <Compile Include="Data\HassinListCriteria.cs" />
+    <Compile Include="Data\HiKokyakuTelNo.cs" />
+    <Compile Include="Data\IdoNyuryokuCriteria.cs" />
+    <Compile Include="Data\IdoNyuryokuDetailCriteria.cs" />
+    <Compile Include="Data\IkkatsuChumonCourse.cs" />
+    <Compile Include="Data\IkkatsuChumonCriteria.cs" />
+    <Compile Include="Data\IkkatsuCourseChumonCriteria.cs" />
+    <Compile Include="Data\IkkatsuNyukin.cs" />
+    <Compile Include="Data\PaySeikyuTokuisaki.cs" />
+    <Compile Include="Data\SeikyuAdd.cs" />
+    <Compile Include="Data\SeikyuHeader.cs" />
+    <Compile Include="Data\ShippingHistoryCriteria.cs" />
+    <Compile Include="Data\ShippingStatusCriteria.cs" />
+    <Compile Include="Data\SyukkaHistory.cs" />
+    <Compile Include="Data\SyukkaMeisai.cs" />
+    <Compile Include="Data\TPUriageInfo.cs" />
+    <Compile Include="Data\TPSaleHistory.cs" />
+    <Compile Include="Data\TPSettlementInfo.cs" />
+    <Compile Include="Data\UriageBunsekiHyoCriteria.cs" />
+    <Compile Include="Data\KafusokuListCriteria.cs" />
+    <Compile Include="Data\KaikeiRenkei.cs" />
+    <Compile Include="Data\KaikeiRenkeiSyukei.cs" />
+    <Compile Include="Data\KaikeiRenkeiSyukeiListCriteria.cs" />
+    <Compile Include="Data\Kanri.cs" />
+    <Compile Include="Data\KoteiChumonHanneiCriteria.cs" />
+    <Compile Include="Data\MasterExportCriteria.cs" />
+    <Compile Include="Data\MiBunpaiListCriteria.cs" />
+    <Compile Include="Data\MikaisyuListCriteria.cs" />
+    <Compile Include="Data\MobileIdo.cs" />
+    <Compile Include="Data\MobileMochidashi.cs" />
+    <Compile Include="Data\NippaiMochidashiCriteria.cs" />
+    <Compile Include="Data\NohinPublish.cs" />
+    <Compile Include="Data\Nyukin.cs" />
+    <Compile Include="Data\NyukinAssist.cs" />
+    <Compile Include="Data\NyukinEBImport.cs" />
+    <Compile Include="Data\NyukinListCriteria.cs" />
+    <Compile Include="Data\NyukinTarget.cs" />
+    <Compile Include="Data\OperationHistoryCriteria.cs" />
+    <Compile Include="Data\OrderHistoryCriteria.cs" />
+    <Compile Include="Data\PrintSettings.cs" />
+    <Compile Include="Data\ReceiptPrint.cs" />
+    <Compile Include="Data\RinjiCourse.cs" />
+    <Compile Include="Data\RinjiCourseTable.cs" />
+    <Compile Include="Data\SeikyuCriteria.cs" />
+    <Compile Include="Data\SeikyuDataEB.cs" />
+    <Compile Include="Data\SeikyuDataEBReCreate.cs" />
+    <Compile Include="Data\SeikyuDataEBReCreateCriteria.cs" />
+    <Compile Include="Data\SeikyuDataEBReCreateImport.cs" />
+    <Compile Include="Data\SeikyuGokei.cs" />
+    <Compile Include="Data\SeikyuKagami.cs" />
+    <Compile Include="Data\SeikyuListCriteria.cs" />
+    <Compile Include="Data\SeikyuPrintTarget.cs" />
+    <Compile Include="Data\SeikyuPublish.cs" />
+    <Compile Include="Data\SeikyuShimeCriteria.cs" />
+    <Compile Include="Data\SeisanYotei.cs" />
+    <Compile Include="Data\SeisanYoteiCriteria.cs" />
+    <Compile Include="Data\SeisanYoteiFromBetsubi.cs" />
+    <Compile Include="Data\SeisanYoteiTotalCriteria.cs" />
+    <Compile Include="Data\Shiten.cs" />
+    <Compile Include="Data\Shiwake.cs" />
+    <Compile Include="Data\ShiwakeCriteria.cs" />
+    <Compile Include="Data\Shukujitsu.cs" />
+    <Compile Include="Data\ShukujitsuCriteria.cs" />
+    <Compile Include="Data\Syohin.cs" />
+    <Compile Include="Data\SyohinCriteria.cs" />
+    <Compile Include="Data\SyohinGourp.cs" />
+    <Compile Include="Data\Syohizei.cs" />
+    <Compile Include="Data\SyuyoBuhin.cs" />
+    <Compile Include="Data\SyuyoBuhinCriteria.cs" />
+    <Compile Include="Data\SyuyoSyohin.cs" />
+    <Compile Include="Data\SyuyoSyohinCriteria.cs" />
+    <Compile Include="Data\TableBase.cs" />
+    <Compile Include="Data\TableBase2.cs" />
+    <Compile Include="Data\TantoKadenCourse.cs" />
+    <Compile Include="Data\Tantousya.cs" />
+    <Compile Include="Data\TantousyaCriteria.cs" />
+    <Compile Include="Data\TanzakuCourseName.cs" />
+    <Compile Include="Data\TanzakuOrderMail.cs" />
+    <Compile Include="Data\TanzakuPrintCriteria.cs" />
+    <Compile Include="Data\TanzakuSealOrder.cs" />
+    <Compile Include="Data\TanzakuSettei.cs" />
+    <Compile Include="Data\TanzakuSyukeiSettei.cs" />
+    <Compile Include="Data\TelToCust.cs" />
+    <Compile Include="Data\Tokuisaki.cs" />
+    <Compile Include="Data\TokuisakiAkiBangoCriteria.cs" />
+    <Compile Include="Data\TokuisakiCriteria.cs" />
+    <Compile Include="Data\TokuisakiFurikomiIraiNin.cs" />
+    <Compile Include="Data\TokuisakiHassinRireki.cs" />
+    <Compile Include="Data\TokuisakiRireki.cs" />
+    <Compile Include="Data\TokuisakiTanka.cs" />
+    <Compile Include="Data\TokuisakiTankaTekiyou.cs" />
+    <Compile Include="Data\TokuisakiTankaTekiyouCriteria.cs" />
+    <Compile Include="Data\UriageHeader.cs" />
+    <Compile Include="Data\TPListCriteria.cs" />
+    <Compile Include="Data\UriageListCriteria.cs" />
+    <Compile Include="Data\UriageMeisai.cs" />
+    <Compile Include="Data\UriageMeisaiCriteria.cs" />
+    <Compile Include="Data\UriageNikkeiHyo.cs" />
+    <Compile Include="Data\UriageSeisanCriteria.cs" />
+    <Compile Include="Data\UriageSeisanHeader.cs" />
+    <Compile Include="Data\UriageSeisanListCriteria.cs" />
+    <Compile Include="Data\UriageSeisanMochidashiMeisai.cs" />
+    <Compile Include="Data\UriageSeisanTemporary.cs" />
+    <Compile Include="Data\UriageSeisanUriageMeisai.cs" />
+    <Compile Include="Data\UriageTokuisaki.cs" />
+    <Compile Include="Data\UrikakeBunpaiCriteria.cs" />
+    <Compile Include="Data\UrikakeZanListCriteria.cs" />
+    <Compile Include="Data\UserData.cs" />
+    <Compile Include="Data\WebAutoLogin.cs" />
+    <Compile Include="Data\WebDisableOrder.cs" />
+    <Compile Include="Data\WebDisableOrderCriteria.cs" />
+    <Compile Include="Data\WebDisableOrderListCriteria.cs" />
+    <Compile Include="Data\WebDisableSyohinCriteria.cs" />
+    <Compile Include="Data\WebOrderHistory.cs" />
+    <Compile Include="Data\WebOrderSetting.cs" />
+    <Compile Include="Data\WebSuspendOrder.cs" />
+    <Compile Include="Data\WebSuspendOrderCriteria.cs" />
+    <Compile Include="Data\WebTokuisaki.cs" />
+    <Compile Include="Data\WebTokuisakiCriteria.cs" />
+    <Compile Include="Data\YokiKaisyuHyo.cs" />
+    <Compile Include="Data\YoubiChumonFlags.cs" />
+    <Compile Include="Data\YoubiChumonHanneiCriteria.cs" />
+    <Compile Include="Data\YoubiChumonSettei.cs" />
+    <Compile Include="Data\YoubiChumonSetteiCriteria.cs" />
+    <Compile Include="Data\ZuijiUriNyuListCriteria.cs" />
+    <Compile Include="Form100.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form100.Designer.cs">
+      <DependentUpon>Form100.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form101.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form101.Designer.cs">
+      <DependentUpon>Form101.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form102A.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form102A.Designer.cs">
+      <DependentUpon>Form102A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form102.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form102.Designer.cs">
+      <DependentUpon>Form102.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form103.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form103.Designer.cs">
+      <DependentUpon>Form103.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form200.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form200.Designer.cs">
+      <DependentUpon>Form200.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form201.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form201.Designer.cs">
+      <DependentUpon>Form201.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form202.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form202.Designer.cs">
+      <DependentUpon>Form202.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form203.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form203.Designer.cs">
+      <DependentUpon>Form203.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form204.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form204.Designer.cs">
+      <DependentUpon>Form204.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form204C.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form204C.Designer.cs">
+      <DependentUpon>Form204C.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form205.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form205.Designer.cs">
+      <DependentUpon>Form205.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form206.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form206.Designer.cs">
+      <DependentUpon>Form206.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form207.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form207.Designer.cs">
+      <DependentUpon>Form207.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form208.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form208.Designer.cs">
+      <DependentUpon>Form208.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form209.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form209.Designer.cs">
+      <DependentUpon>Form209.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form210.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form210.Designer.cs">
+      <DependentUpon>Form210.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form300.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form300.Designer.cs">
+      <DependentUpon>Form300.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form301.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form301.Designer.cs">
+      <DependentUpon>Form301.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form301B.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form301B.Designer.cs">
+      <DependentUpon>Form301B.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form301D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form301D.Designer.cs">
+      <DependentUpon>Form301D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form302.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form302.Designer.cs">
+      <DependentUpon>Form302.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form303.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form303.Designer.cs">
+      <DependentUpon>Form303.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form304.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form304.Designer.cs">
+      <DependentUpon>Form304.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form304E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form304E.Designer.cs">
+      <DependentUpon>Form304E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form304H.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form304H.Designer.cs">
+      <DependentUpon>Form304H.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form305.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form305.Designer.cs">
+      <DependentUpon>Form305.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form306.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form306.Designer.cs">
+      <DependentUpon>Form306.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form307.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form307.Designer.cs">
+      <DependentUpon>Form307.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form307E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form307E.Designer.cs">
+      <DependentUpon>Form307E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form307M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form307M.Designer.cs">
+      <DependentUpon>Form307M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form307P.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form307P.Designer.cs">
+      <DependentUpon>Form307P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form400.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form400.Designer.cs">
+      <DependentUpon>Form400.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form401.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form401.Designer.cs">
+      <DependentUpon>Form401.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form402.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form402.Designer.cs">
+      <DependentUpon>Form402.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form403.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form403.Designer.cs">
+      <DependentUpon>Form403.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form404.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form404.Designer.cs">
+      <DependentUpon>Form404.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form405.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form405.Designer.cs">
+      <DependentUpon>Form405.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form406.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form406.Designer.cs">
+      <DependentUpon>Form406.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form407.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form407.Designer.cs">
+      <DependentUpon>Form407.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form408.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form408.Designer.cs">
+      <DependentUpon>Form408.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form500.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form500.Designer.cs">
+      <DependentUpon>Form500.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form501.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form501.Designer.cs">
+      <DependentUpon>Form501.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form501P.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form501P.Designer.cs">
+      <DependentUpon>Form501P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form502.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form502.Designer.cs">
+      <DependentUpon>Form502.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form503.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form503.Designer.cs">
+      <DependentUpon>Form503.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form504.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form504.Designer.cs">
+      <DependentUpon>Form504.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form505.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form505.Designer.cs">
+      <DependentUpon>Form505.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form506.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form506.Designer.cs">
+      <DependentUpon>Form506.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form507.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form507.Designer.cs">
+      <DependentUpon>Form507.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form508.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form508.Designer.cs">
+      <DependentUpon>Form508.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form509.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form509.Designer.cs">
+      <DependentUpon>Form509.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form510.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form510.Designer.cs">
+      <DependentUpon>Form510.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form511.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form511.Designer.cs">
+      <DependentUpon>Form511.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form512.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form512.Designer.cs">
+      <DependentUpon>Form512.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form512D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form512D.Designer.cs">
+      <DependentUpon>Form512D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form600.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form600.Designer.cs">
+      <DependentUpon>Form600.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form601.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form601.Designer.cs">
+      <DependentUpon>Form601.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form602.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form602.Designer.cs">
+      <DependentUpon>Form602.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form603.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form603.Designer.cs">
+      <DependentUpon>Form603.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form603N.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form603N.Designer.cs">
+      <DependentUpon>Form603N.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form604.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form604.Designer.cs">
+      <DependentUpon>Form604.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form700.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form700.Designer.cs">
+      <DependentUpon>Form700.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form700D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form700D.Designer.cs">
+      <DependentUpon>Form700D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form700DC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form700DC.Designer.cs">
+      <DependentUpon>Form700DC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form700DH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form700DH.Designer.cs">
+      <DependentUpon>Form700DH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form700DN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form700DN.Designer.cs">
+      <DependentUpon>Form700DN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form700N.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form700N.Designer.cs">
+      <DependentUpon>Form700N.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form701.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form701.Designer.cs">
+      <DependentUpon>Form701.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form702.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form702.Designer.cs">
+      <DependentUpon>Form702.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form702D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form702D.Designer.cs">
+      <DependentUpon>Form702D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form703.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form703.Designer.cs">
+      <DependentUpon>Form703.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form704.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form704.Designer.cs">
+      <DependentUpon>Form704.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form705.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form705.Designer.cs">
+      <DependentUpon>Form705.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form705D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form705D.Designer.cs">
+      <DependentUpon>Form705D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form706.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form706.Designer.cs">
+      <DependentUpon>Form706.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form706D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form706D.Designer.cs">
+      <DependentUpon>Form706D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form707.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form707.Designer.cs">
+      <DependentUpon>Form707.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form707D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form707D.Designer.cs">
+      <DependentUpon>Form707D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form708.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form708.Designer.cs">
+      <DependentUpon>Form708.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form708D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form708D.Designer.cs">
+      <DependentUpon>Form708D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form708M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form708M.Designer.cs">
+      <DependentUpon>Form708M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form709.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form709.Designer.cs">
+      <DependentUpon>Form709.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form709D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form709D.Designer.cs">
+      <DependentUpon>Form709D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form710.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form710.Designer.cs">
+      <DependentUpon>Form710.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form711.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form711.Designer.cs">
+      <DependentUpon>Form711.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form713.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form713.Designer.cs">
+      <DependentUpon>Form713.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form714.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form714.Designer.cs">
+      <DependentUpon>Form714.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form715.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form715.Designer.cs">
+      <DependentUpon>Form715.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form716.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form716.Designer.cs">
+      <DependentUpon>Form716.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form717.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form717.Designer.cs">
+      <DependentUpon>Form717.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form717D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form717D.Designer.cs">
+      <DependentUpon>Form717D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form790.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form790.Designer.cs">
+      <DependentUpon>Form790.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form806.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form806.Designer.cs">
+      <DependentUpon>Form806.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form810.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form810.Designer.cs">
+      <DependentUpon>Form810.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form811.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form811.Designer.cs">
+      <DependentUpon>Form811.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form812.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form812.Designer.cs">
+      <DependentUpon>Form812.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form813.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form813.Designer.cs">
+      <DependentUpon>Form813.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form814.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form814.Designer.cs">
+      <DependentUpon>Form814.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form815.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form815.Designer.cs">
+      <DependentUpon>Form815.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form816.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form816.Designer.cs">
+      <DependentUpon>Form816.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form817.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form817.Designer.cs">
+      <DependentUpon>Form817.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form820.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form820.Designer.cs">
+      <DependentUpon>Form820.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form821.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form821.Designer.cs">
+      <DependentUpon>Form821.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form821D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form821D.Designer.cs">
+      <DependentUpon>Form821D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form822.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form822.Designer.cs">
+      <DependentUpon>Form822.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form830.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form830.Designer.cs">
+      <DependentUpon>Form830.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form830D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form830D.Designer.cs">
+      <DependentUpon>Form830D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form831.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form831.Designer.cs">
+      <DependentUpon>Form831.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form832.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form832.Designer.cs">
+      <DependentUpon>Form832.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form840.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form840.Designer.cs">
+      <DependentUpon>Form840.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form908.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form908.Designer.cs">
+      <DependentUpon>Form908.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form980.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form980.Designer.cs">
+      <DependentUpon>Form980.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form841.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form841.Designer.cs">
+      <DependentUpon>Form841.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form900.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form900.Designer.cs">
+      <DependentUpon>Form900.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form900F.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form900F.Designer.cs">
+      <DependentUpon>Form900F.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form900M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form900M.Designer.cs">
+      <DependentUpon>Form900M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form901.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form901.Designer.cs">
+      <DependentUpon>Form901.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form902.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form902.Designer.cs">
+      <DependentUpon>Form902.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form904.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form904.Designer.cs">
+      <DependentUpon>Form904.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form905.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form905.Designer.cs">
+      <DependentUpon>Form905.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form906.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form906.Designer.cs">
+      <DependentUpon>Form906.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form907.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form907.Designer.cs">
+      <DependentUpon>Form907.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPreview.Designer.cs">
+      <DependentUpon>FormPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IDialog.cs" />
+    <Compile Include="MDIParent1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MDIParent1.Designer.cs">
+      <DependentUpon>MDIParent1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaySeikyuShimeExec.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report000A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report000A.Designer.cs">
+      <DependentUpon>Report000A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report100A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report100A.Designer.cs">
+      <DependentUpon>Report100A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report100ASub.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report100ASub.Designer.cs">
+      <DependentUpon>Report100ASub.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report200TateA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report200TateA.Designer.cs">
+      <DependentUpon>Report200TateA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report200YokoA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report200YokoA.Designer.cs">
+      <DependentUpon>Report200YokoA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report201TateA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report201TateA.Designer.cs">
+      <DependentUpon>Report201TateA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report201YokoA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report201YokoA.Designer.cs">
+      <DependentUpon>Report201YokoA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report202A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report202A.Designer.cs">
+      <DependentUpon>Report202A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report211A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report211A.Designer.cs">
+      <DependentUpon>Report211A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report211ASubBiko.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report211ASubBiko.Designer.cs">
+      <DependentUpon>Report211ASubBiko.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report211ASubSyohin.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report211ASubSyohin.Designer.cs">
+      <DependentUpon>Report211ASubSyohin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report300A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report300A.Designer.cs">
+      <DependentUpon>Report300A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report303A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report303A.Designer.cs">
+      <DependentUpon>Report303A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report304A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report304A.Designer.cs">
+      <DependentUpon>Report304A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report307A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report307A.Designer.cs">
+      <DependentUpon>Report307A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report512A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report512A.Designer.cs">
+      <DependentUpon>Report512A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report402A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report402A.Designer.cs">
+      <DependentUpon>Report402A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report403AMain.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report403AMain.Designer.cs">
+      <DependentUpon>Report403AMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report403ASubMeisaiPay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report403ASubMeisaiPay.Designer.cs">
+      <DependentUpon>Report403ASubMeisaiPay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report403ASubMeisaiGenkin.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report403ASubMeisaiGenkin.Designer.cs">
+      <DependentUpon>Report403ASubMeisaiGenkin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report403ASubMeisaiKakeuri.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report403ASubMeisaiKakeuri.Designer.cs">
+      <DependentUpon>Report403ASubMeisaiKakeuri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report403ASubMochidashi.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report403ASubMochidashi.Designer.cs">
+      <DependentUpon>Report403ASubMochidashi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report405A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report405A.Designer.cs">
+      <DependentUpon>Report405A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report408A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report408A.Designer.cs">
+      <DependentUpon>Report408A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report500A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report500A.Designer.cs">
+      <DependentUpon>Report500A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report501A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report501A.Designer.cs">
+      <DependentUpon>Report501A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report506TateA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report506TateA.Designer.cs">
+      <DependentUpon>Report506TateA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report506YokoA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report506YokoA.Designer.cs">
+      <DependentUpon>Report506YokoA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report600A.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report600A.Designer.cs">
+      <DependentUpon>Report600A.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report817BusyoA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report817BusyoA.Designer.cs">
+      <DependentUpon>Report817BusyoA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report817CourseA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report817CourseA.Designer.cs">
+      <DependentUpon>Report817CourseA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report817TantousyaA.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report817TantousyaA.Designer.cs">
+      <DependentUpon>Report817TantousyaA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SeikyuEBWriter.cs" />
+    <Compile Include="SeikyuPrintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SeikyuPrintForm.Designer.cs">
+      <DependentUpon>SeikyuPrintForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SeikyuShimeExec.cs" />
+    <Compile Include="WebAPI\LineProxy.cs" />
+    <Compile Include="WebAPI\ResponseHeaderModel.cs" />
+    <Compile Include="WebAPI\WebAPIBase.cs" />
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseSpreadForm.resx">
+      <DependentUpon>BaseSpreadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\Control\DateTimePickerA.resx">
+      <DependentUpon>DateTimePickerA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form100.resx">
+      <DependentUpon>Form100.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form101.resx">
+      <DependentUpon>Form101.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form102A.resx">
+      <DependentUpon>Form102A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form102.resx">
+      <DependentUpon>Form102.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form103.resx">
+      <DependentUpon>Form103.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form200.resx">
+      <DependentUpon>Form200.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form201.resx">
+      <DependentUpon>Form201.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form202.resx">
+      <DependentUpon>Form202.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form203.resx">
+      <DependentUpon>Form203.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form204.resx">
+      <DependentUpon>Form204.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form204C.resx">
+      <DependentUpon>Form204C.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form205.resx">
+      <DependentUpon>Form205.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form206.resx">
+      <DependentUpon>Form206.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form207.resx">
+      <DependentUpon>Form207.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form208.resx">
+      <DependentUpon>Form208.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form209.resx">
+      <DependentUpon>Form209.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form210.resx">
+      <DependentUpon>Form210.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form300.resx">
+      <DependentUpon>Form300.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form301.resx">
+      <DependentUpon>Form301.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form301B.resx">
+      <DependentUpon>Form301B.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form301D.resx">
+      <DependentUpon>Form301D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form302.resx">
+      <DependentUpon>Form302.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form303.resx">
+      <DependentUpon>Form303.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form304.resx">
+      <DependentUpon>Form304.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form304E.resx">
+      <DependentUpon>Form304E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form304H.resx">
+      <DependentUpon>Form304H.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form305.resx">
+      <DependentUpon>Form305.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form306.resx">
+      <DependentUpon>Form306.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form307.resx">
+      <DependentUpon>Form307.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form307E.resx">
+      <DependentUpon>Form307E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form307M.resx">
+      <DependentUpon>Form307M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form307P.resx">
+      <DependentUpon>Form307P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form400.resx">
+      <DependentUpon>Form400.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form401.resx">
+      <DependentUpon>Form401.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form402.resx">
+      <DependentUpon>Form402.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form403.resx">
+      <DependentUpon>Form403.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form404.resx">
+      <DependentUpon>Form404.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form405.resx">
+      <DependentUpon>Form405.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form406.resx">
+      <DependentUpon>Form406.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form407.resx">
+      <DependentUpon>Form407.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form408.resx">
+      <DependentUpon>Form408.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form500.resx">
+      <DependentUpon>Form500.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form501.resx">
+      <DependentUpon>Form501.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form501P.resx">
+      <DependentUpon>Form501P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form502.resx">
+      <DependentUpon>Form502.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form503.resx">
+      <DependentUpon>Form503.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form504.resx">
+      <DependentUpon>Form504.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form505.resx">
+      <DependentUpon>Form505.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form506.resx">
+      <DependentUpon>Form506.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form507.resx">
+      <DependentUpon>Form507.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form508.resx">
+      <DependentUpon>Form508.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form509.resx">
+      <DependentUpon>Form509.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form510.resx">
+      <DependentUpon>Form510.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form511.resx">
+      <DependentUpon>Form511.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form512.resx">
+      <DependentUpon>Form512.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form512D.resx">
+      <DependentUpon>Form512D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form600.resx">
+      <DependentUpon>Form600.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form601.resx">
+      <DependentUpon>Form601.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form602.resx">
+      <DependentUpon>Form602.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form603.resx">
+      <DependentUpon>Form603.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form603N.resx">
+      <DependentUpon>Form603N.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form604.resx">
+      <DependentUpon>Form604.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form700.resx">
+      <DependentUpon>Form700.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form700D.resx">
+      <DependentUpon>Form700D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form700DC.resx">
+      <DependentUpon>Form700DC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form700DH.resx">
+      <DependentUpon>Form700DH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form700DN.resx">
+      <DependentUpon>Form700DN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form700N.resx">
+      <DependentUpon>Form700N.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form701.resx">
+      <DependentUpon>Form701.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form702.resx">
+      <DependentUpon>Form702.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form702D.resx">
+      <DependentUpon>Form702D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form703.resx">
+      <DependentUpon>Form703.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form704.resx">
+      <DependentUpon>Form704.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form705.resx">
+      <DependentUpon>Form705.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form705D.resx">
+      <DependentUpon>Form705D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form706.resx">
+      <DependentUpon>Form706.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form706D.resx">
+      <DependentUpon>Form706D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form707.resx">
+      <DependentUpon>Form707.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form707D.resx">
+      <DependentUpon>Form707D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form708.resx">
+      <DependentUpon>Form708.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form708D.resx">
+      <DependentUpon>Form708D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form708M.resx">
+      <DependentUpon>Form708M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form709.resx">
+      <DependentUpon>Form709.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form709D.resx">
+      <DependentUpon>Form709D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form710.resx">
+      <DependentUpon>Form710.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form711.resx">
+      <DependentUpon>Form711.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form713.resx">
+      <DependentUpon>Form713.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form714.resx">
+      <DependentUpon>Form714.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form715.resx">
+      <DependentUpon>Form715.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form716.resx">
+      <DependentUpon>Form716.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form717.resx">
+      <DependentUpon>Form717.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form717D.resx">
+      <DependentUpon>Form717D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form790.resx">
+      <DependentUpon>Form790.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form806.resx">
+      <DependentUpon>Form806.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form810.resx">
+      <DependentUpon>Form810.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form811.resx">
+      <DependentUpon>Form811.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form812.resx">
+      <DependentUpon>Form812.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form813.resx">
+      <DependentUpon>Form813.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form814.resx">
+      <DependentUpon>Form814.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form815.resx">
+      <DependentUpon>Form815.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form816.resx">
+      <DependentUpon>Form816.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form817.resx">
+      <DependentUpon>Form817.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form820.resx">
+      <DependentUpon>Form820.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form821.resx">
+      <DependentUpon>Form821.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form821D.resx">
+      <DependentUpon>Form821D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form822.resx">
+      <DependentUpon>Form822.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form830.resx">
+      <DependentUpon>Form830.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form830D.resx">
+      <DependentUpon>Form830D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form831.resx">
+      <DependentUpon>Form831.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form832.resx">
+      <DependentUpon>Form832.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form840.resx">
+      <DependentUpon>Form840.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form908.resx">
+      <DependentUpon>Form908.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form980.resx">
+      <DependentUpon>Form980.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form841.resx">
+      <DependentUpon>Form841.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form900.resx">
+      <DependentUpon>Form900.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form900F.resx">
+      <DependentUpon>Form900F.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form900M.resx">
+      <DependentUpon>Form900M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form901.resx">
+      <DependentUpon>Form901.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form902.resx">
+      <DependentUpon>Form902.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form904.resx">
+      <DependentUpon>Form904.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form905.resx">
+      <DependentUpon>Form905.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form906.resx">
+      <DependentUpon>Form906.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form907.resx">
+      <DependentUpon>Form907.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPreview.resx">
+      <DependentUpon>FormPreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MDIParent1.resx">
+      <DependentUpon>MDIParent1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Report000A.resx">
+      <DependentUpon>Report000A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report100A.resx">
+      <DependentUpon>Report100A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report100ASub.resx">
+      <DependentUpon>Report100ASub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report200TateA.resx">
+      <DependentUpon>Report200TateA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report200YokoA.resx">
+      <DependentUpon>Report200YokoA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report201TateA.resx">
+      <DependentUpon>Report201TateA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report201YokoA.resx">
+      <DependentUpon>Report201YokoA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report202A.resx">
+      <DependentUpon>Report202A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report211A.resx">
+      <DependentUpon>Report211A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report211ASubBiko.resx">
+      <DependentUpon>Report211ASubBiko.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report211ASubSyohin.resx">
+      <DependentUpon>Report211ASubSyohin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report300A.resx">
+      <DependentUpon>Report300A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report303A.resx">
+      <DependentUpon>Report303A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report304A.resx">
+      <DependentUpon>Report304A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report307A.resx">
+      <DependentUpon>Report307A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report512A.resx">
+      <DependentUpon>Report512A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report402A.resx">
+      <DependentUpon>Report402A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report403AMain.resx">
+      <DependentUpon>Report403AMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report403ASubMeisaiPay.resx">
+      <DependentUpon>Report403ASubMeisaiPay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report403ASubMeisaiGenkin.resx">
+      <DependentUpon>Report403ASubMeisaiGenkin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report403ASubMeisaiKakeuri.resx">
+      <DependentUpon>Report403ASubMeisaiKakeuri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report403ASubMochidashi.resx">
+      <DependentUpon>Report403ASubMochidashi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report405A.resx">
+      <DependentUpon>Report405A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report408A.resx">
+      <DependentUpon>Report408A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report500A.resx">
+      <DependentUpon>Report500A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report501A.resx">
+      <DependentUpon>Report501A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report506TateA.resx">
+      <DependentUpon>Report506TateA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report506YokoA.resx">
+      <DependentUpon>Report506YokoA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report600A.resx">
+      <DependentUpon>Report600A.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report817BusyoA.resx">
+      <DependentUpon>Report817BusyoA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report817CourseA.resx">
+      <DependentUpon>Report817CourseA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report817TantousyaA.resx">
+      <DependentUpon>Report817TantousyaA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SeikyuPrintForm.resx">
+      <DependentUpon>SeikyuPrintForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.AnserApiContainer.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.AnserApiImportCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Bank.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.BankBranch.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.BigBagLabelCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.BigBagLabelPrintCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Biko.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Busyo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.BusyoCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CallCourseCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ChumonHeader.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ChumonListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ChumonMeisai.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ChumonMeisaiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ChumonTokuisaki.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ChumonZandaka.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Course.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseChumonCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseChumonListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseGroup.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseGroupCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseGroupDetail.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseMoveCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseRinjiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseTable.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.CourseUriageListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GassanSeikyusyo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GetsujiSyohinListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GetsujiSyukeiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GetsujiTokuisakiListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GetsujiTokuisakiSuiiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GetsujiUrikakeZanEdit.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.GetsujiUrikakeZanListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.HaisoYoteiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.HaisoYoteiFromUriage.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.HanbaiJissekiListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.HassinListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.HiKokyakuTelNo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.IdoNyuryokuCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.IdoNyuryokuDetailCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.IkkatsuChumonCourse.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.IkkatsuChumonCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.IkkatsuCourseChumonCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.IkkatsuNyukin.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.KafusokuListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.KaikeiRenkei.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.KaikeiRenkeiSyukeiListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Kanri.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.KoteiChumonHanneiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.MasterExportCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.MiBunpaiListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.MikaisyuListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.MobileMochidashi.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.NippaiMochidashiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.NohinPublish.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.NyukinAssist.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.NyukinEBImport.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.NyukinListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.NyukinTarget.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.OperationHistoryCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.OrderHistoryCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.PaySeikyuDetailCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.PaySeikyuListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.PaySeikyuShimeCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ReceiptPrint.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.RinjiCourse.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuAdd.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuDataEB.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuDataEBReCreate.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuDataEBReCreateCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuDataEBReCreateImport.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuGokei.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuKagami.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeikyuPublish.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeisanYoteiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeisanYoteiFromBetsubi.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SeisanYoteiTotalCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ShippingHistoryCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ShippingStatusCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Shiwake.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ShiwakeCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Shukujitsu.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ShukujitsuCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Syohin.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SyohinCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SyohinGourp.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Syohizei.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SyuyoBuhin.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SyuyoBuhinCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SyuyoSyohin.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.SyuyoSyohinCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Tantousya.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TantousyaCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TanzakuCourseName.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TanzakuPrintCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TanzakuSealOrder.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TanzakuSettei.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TanzakuSyukeiSettei.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TelToCust.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.Tokuisaki.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TokuisakiAkiBangoCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TokuisakiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TokuisakiFurikomiIraiNin.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TokuisakiTanka.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TokuisakiTankaTekiyouCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TPListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TPSaleHistory.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TPSettlementInfo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.TPUriageInfo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageBunsekiHyoCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageHeader.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageMeisai.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageMeisaiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageNikkeiHyo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageSeisanCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageSeisanHeader.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageSeisanListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UriageTokuisaki.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UrikakeBunpaiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.UrikakeZanListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebDisableOrderCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebDisableOrderListCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebDisableSyohinCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebOrderSetting.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebSuspendOrderCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebTokuisaki.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.WebTokuisakiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.YokiKaisyuHyo.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.YoubiChumonHanneiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.YoubiChumonSetteiCriteria.datasource" />
+    <None Include="Properties\DataSources\Emu.Bento.Data.ZuijiUriNyuListCriteria.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LICENCE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Log4net.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\application_cascade.png" />
+    <None Include="Resources\application_cascade_ico.ico" />
+    <Content Include="Resources\calculator.png" />
+    <None Include="Resources\calculator_ico.ico" />
+    <None Include="Resources\chart_curve_ico.ico" />
+    <None Include="Resources\coins_ico.ico" />
+    <None Include="Resources\database_gear_ico.ico" />
+    <None Include="Resources\group_ico.ico" />
+    <None Include="Resources\lorry_flatbed_ico.ico" />
+    <None Include="Resources\lorry_go_ico.ico" />
+    <None Include="Resources\magnifier_ico.ico" />
+    <None Include="Resources\money_ico.ico" />
+    <None Include="Resources\page_ico.ico" />
+    <None Include="Resources\warning_ico.ico" />
+    <Content Include="Resources\world.png" />
+    <None Include="Resources\world_ico.ico" />
+    <Content Include="Silk_Icons_License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\chart_curve.png" />
+    <Content Include="Resources\coins.png" />
+    <None Include="Resources\group.png" />
+    <None Include="Resources\database_gear.png" />
+    <None Include="Resources\lorry_flatbed.png" />
+    <None Include="Resources\lorry_go.png" />
+    <Content Include="Resources\icon.ico" />
+    <Content Include="Resources\money.png" />
+    <Content Include="Resources\page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 および x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows インストーラー 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
