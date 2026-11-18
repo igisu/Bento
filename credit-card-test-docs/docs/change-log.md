@@ -8,3 +8,5 @@
 - `docs/test-results/2026-11-18-run-001.md` に実行証跡と未実行ケースを記録。既存の `docs/test-result/` にある履歴は保持。
 - フォーム再調査で請求削除・保存の状態確認、カード削除の編集権限、利用サマリーの店舗・料率選択について静的指摘を追記。
 - `docs/test-environment-plan.md` に未実行25件の依存関係、隔離SQL・FRスタブ、優先実行順を記録。
+- BLOCKED_ENVの25件を再分類し、`docs/analysis/test-environment-reassessment.md` に直接原因と残存する結合検証を記録。
+- `tests/FRWorkflow` に本番メソッドを抽出して実行するハーネスを追加。TC-CC-034〜042の実測（PASS 4、FAIL 4、REVIEW_ONLY 1）を `docs/test-results/2026-11-18-run-002.md` に追記。

@@ -121,3 +121,7 @@
 |---|---|---|---|---|
 | TC-CC-032 | REQ-CC-005,021 | Form513D.CancelExec / Save | 同じ成功取引の取消画面を2端末で開き、最初の取消の応答受領前に2台目から操作。結果不明を記録した後は再取消0回。応答受領前のAPI側重複排除は仕様照会 | BLOCKED_ENV |
 | TC-CC-033 | REQ-CC-009 | Form513.btnQuery_Click / btnExec_Click、Form513B.SettleExec | 検索後にテストマスタのカードを無効化してから決済。API呼出し0回 | BLOCKED_ENV |
+
+## フォームを起動しない処理境界テスト
+
+`tests/FRWorkflow` は本番の `Form513B.SettleExec`、`Form513B.ConsistencyExec`、`Form513D.CancelExec` の本文をビルド時に直接取り込む。API・DB・画面・履歴はテストダブル。対象メソッド、入力、期待結果、未検証範囲は [TC-CC-034〜042の実行記録](test-results/2026-11-18-run-002.md) を参照。元シナリオとの対応と解除条件は [環境再評価](analysis/test-environment-reassessment.md) に記録。
