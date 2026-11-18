@@ -67,3 +67,57 @@
 3. 実行可能なテスト基盤と必要な追加パッケージ・ファイルを報告する。
 4. モック/隔離DBでテストを実装・実行し、証跡付きで結果を記録する。
 5. 仕様不明・環境不足・既存コードの欠陥を区別して報告する。
+
+## 実装への対応（main 8de0c44）
+
+以下のファイルはすべてリポジトリの `EmuLunch2/` 配下。フォーム名と同名の .cs を参照。動的検証の観測点は外部スタブの要求履歴、独立接続から見たコミット済DB、画面再表示、および別プロセスからの操作とする。
+
+| TC-CC | AC-CC | 対象ファイル・メソッド | 未実行の検証で観測する箇所 |
+|---|---|---|---|
+| 001 | 001 | Form500.btnExec_Click、SeikyuShimeExec.CreateTotalTemp、Form513.btnQuery_Click / btnExec_Click、Form513B.SettleExec、Form700D.btnCardDelete_Click | 請求合計.FR支払フラグ、締区分、得意先マスタ.クレカ無効フラグ。検索後に無効化したケースも作る |
+| 002 | 002 | Form513.btnExec_Click、Form513B.SettleExec、WebAPI/FRSettlement.SaleSettlement | スタブの billingAmount と画面からの部分額指定可否 |
+| 003 | 003 | Form513B.SettleExec / Save / ConsistencyExec | API成功後に履歴・請求・入金の保存を順に失敗させ、再起動後の再送回数と管理者対応状態を確認 |
+| 004 | 004 | Form513B.SettleExec / ConsistencyExec、Form515.InquiryExec、WebAPI/WebAPIBase.CallMainFR | スタブ側では成功、クライアントには切断またはタイムアウト。照会前後の再送回数と状態 |
+| 005 | 005 | Form513D.Init / CancelExec、WebAPI/FRSettlement.SaleCancel | 完了・エラー・取引番号と取消要求。取消金額はAPI側の契約で確認 |
+| 006 | 006 | Form500.btnExec_Click、Form501.CanDeleteFR / Delete、Form502.CanSave / Save、SeikyuShimeExec.GetExcludeSeikyuCDList / GetDeleteTargetSQL | 請求合計・請求ヘッダ。Form503.GetTarget は印刷抽出、Form506.GetGassanSeikyusyo は合算請求書取得 |
+| 007 | 007 | Form700.ShowDetail、Form700D.btnCardDelete_Click / CallInfoDeleteCard、Form513D.GetSettlementHistory / CancelExec、Form515.InquiryExec、Form819.btnQuery_Click | カード削除後のローカル履歴と元取引番号、利用明細 |
+| 008 | 008 | Form513B.Save | 入金明細.入金日、処理が深夜を跨ぐ場合は決済日と比較 |
+| 009 | 009 | Form513B.SettleExec / Save、Data/SeikyuGokei.GetFRRecord | 2プロセスの読取をAPIスタブで同期待機させ、同一請求への要求数を集計 |
+| 010 | 010 | Form513D.Save、Form513.btnExec_Click、Form500.btnExec_Click、SeikyuShimeExec.CreateTotalTemp / CreateTotal、Form508.SaveSeikyuGokei | 旧請求への要求回数、新請求番号と最新マスタによるスナップショット |
+| 011 | 011 | Form513B.SettleExec / Save、WebAPI/FRSettlement.SaleSettlement | 5件目の応答ヘッダー失敗と業務結果失敗を分け、履歴と6〜10件目を観測 |
+| 012 | 012 | Form513D.Save | FR_T_クレカ決済履歴に元・取消両行、入金明細の対象行削除 |
+| 013 | 013 | Form818.btnQuery_Click、Form819.btnQuery_Click | 請求合計の完了フラグ・エラー区分を含む集計フィルター |
+| 014 | 014 | Form513D.CancelExec / Save / ConsistencyExec、Form501.CanDeleteFR、SeikyuShimeExec.GetDeleteTargetSQL | 取消送信後に応答を失い、別セッションから再取消・再決済・請求変更を試行 |
+| 015 | 015 | Form509.btnExec_Click、PaySeikyuShimeExec.Run、Form510.btnQuery_Click / Delete、Form511.Form511_Load、Form512.btnQuery_Click / ShowDetail、Form512D.GetNyukin、Form513.btnQuery_Click | TP側の電子決済請求データとFR側の請求合計を同時に用意し、各更新と参照を比較 |
+| 016 | 016 | Form500.btnExec_Click、Form514.btnExec_Click、Form513.btnExec_Click / ShowDetail、Form513B.Form513B_Load / btnExec_Click、Form513D.Form513D_Load / Init / btnExec_Click、Form700D.btnCardDelete_Click | 許可・不許可で通常遷移と直接操作の両方を試行 |
+| 017 | 017 | Form513.btnExec_Click / LockCriteria、Form513B.SettleExec | 現行下限100円。99・100・0・−1円の要求回数 |
+| 018 | 018 | Form818.btnQuery_Click / GetFeeRate、WebAPI/FRSettlement.InfoGetFeeRateList、Form819.btnQuery_Click | 画面表示で最新4%と旧3%を識別。料率適用箇所はForm818 |
+| 019 | 019 | Form513B.SettleExec / Save、Form513D.CancelExec / Save、Form515.InquiryExec | 決済履歴、操作ログの書込み、誰がいつ照会・解除したか |
+| 020 | 020 | Form513B.SettleExec / ShowProgress / ConsistencyExec | 5件目タイムアウトで後続が進み、5件目のロックが再起動後も有効 |
+| 021 | 021 | Form513B.ConsistencyExec、Form513D.ConsistencyExec、Form515.InquiryExec | 専用解除経路の実装位置は未確認。一般権限から書き換え不可を確認 |
+| 022 | 022 | Form513.btnQuery_Click、Form513B.SettleExec、Form513D.Init / btnExec_Click | 実行中の注記・ダイアログ、再読込後の永続状態 |
+| 023 | 023 | Form500.btnExec_Click、SeikyuShimeExec.GetDeleteTargetSQL / CreateTotalTemp、Form513D.Save | 入金明細残存時の締め直し可否と金額・入金紐付けをそれぞれ観測 |
+| 024 | — | Form513B.SettleExec / Save | API送信直後・保存直前にプロセス終了。復旧方式はBLOCKED_SPEC |
+| 025 | — | Form513D.CancelExec / Save / ConsistencyExec | 取消成功後にDELETEまたはCOMMITを失敗させる。具体的復旧方式はBLOCKED_SPEC |
+
+決済・取消では `GetFRRecord` で請求を読み、APIを呼んでから `Save` でSQLトランザクションを開始する。履歴の採番や請求ヘッダ取得には別のDB呼び出しがある。取消要求は元履歴の `seqNo`、決済要求は `billingNumber` を含む。クライアントから確認できる範囲では、これらの値に対する外部サービスの冪等性保証は確認できない。
+
+## 追加したアダプター単体テスト
+
+実装ファイルは `tests/FRAdapter`。実際の `EmuLunch2/WebAPI/FRSettlement.cs` をコンパイルし、通信基底クラスとデータ型をテスト用に置き換える。実機のシリアライザー、HTTP、フォーム、SQL Serverは対象外。リポジトリルートから `dotnet run --project credit-card-test-docs/tests/FRAdapter` で実行する。追加NuGetパッケージなし。
+
+| ID | 要件 | 対象 | スタブ入力と期待結果 |
+|---|---|---|---|
+| TC-CC-026 | REQ-CC-002,024 | FRSettlement.SaleSettlement | 10000円・100円の請求で各1回、請求番号と全額を送信し取引番号を保持 |
+| TC-CC-027 | REQ-CC-005,013 | FRSettlement.SaleCancel | カード情報を持たない合成請求で元取引番号を送信し取消取引番号を取得 |
+| TC-CC-028 | REQ-CC-015,030 | FRSettlement.SaleSettlement | 明示失敗ヘッダーでfalseとエラーメッセージを返す |
+| TC-CC-029 | REQ-CC-004,010,027 | FRSettlement.SaleSettlement | 注入したタイムアウトが呼出元に届き、アダプター内の送信試行は1回 |
+| TC-CC-030 | REQ-CC-021 | FRSettlement.SaleCancel | 注入したタイムアウトが呼出元に届き、アダプター内の送信試行は1回 |
+| TC-CC-031 | REQ-CC-025 | FRSettlement.InfoGetFeeRateList | レスポンスの4%を料率モデルに反映 |
+
+## 追加の障害シナリオ
+
+| ID | 要件 | 対象 | 注入と期待結果 | 判定 |
+|---|---|---|---|---|
+| TC-CC-032 | REQ-CC-005,021 | Form513D.CancelExec / Save | 同じ成功取引の取消画面を2端末で開き、最初の取消の応答受領前に2台目から操作。結果不明を記録した後は再取消0回。応答受領前のAPI側重複排除は仕様照会 | BLOCKED_ENV |
+| TC-CC-033 | REQ-CC-009 | Form513.btnQuery_Click / btnExec_Click、Form513B.SettleExec | 検索後にテストマスタのカードを無効化してから決済。API呼出し0回 | BLOCKED_ENV |
